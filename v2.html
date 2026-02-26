@@ -214,74 +214,91 @@
     }
     .trust a:hover { color: #A1A1AA; }
 
-    /* ── HubSpot form overrides ── */
+    /* ── HubSpot developer-embed overrides (hsfc-* classes) ── */
     .hs-form-wrap {
       width: 100%;
       max-width: 480px;
     }
-    .hs-form-wrap .hs-form {
-      display: flex;
-      width: 100%;
+    /* Outer form: block is fine, we control layout inside */
+    .hs-form-wrap form { width: 100% !important; }
+
+    /* Step content: flex row so field + button sit inline */
+    .hs-form-wrap .hsfc-Step__Content {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      width: 100% !important;
+      gap: 0 !important;
     }
-    .hs-form-wrap .hs-form-field {
-      flex: 1;
-      margin: 0;
+    /* Field row takes remaining space */
+    .hs-form-wrap .hsfc-Row {
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
-    .hs-form-wrap label { display: none; }
-    .hs-form-wrap .hs-input {
-      width: 100%;
-      background: #FFFFFF;
-      border: 1px solid rgba(124,58,237,0.25);
-      border-right: none;
-      border-radius: 10px 0 0 10px;
-      padding: 14px 18px;
-      color: #18181B;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s, background 0.2s;
-      box-shadow: none;
-      -webkit-appearance: none;
+    /* Email field wrapper */
+    .hs-form-wrap .hsfc-EmailField {
+      width: 100% !important;
+      margin: 0 !important;
     }
-    .hs-form-wrap .hs-input::placeholder { color: #71717A; }
-    .hs-form-wrap .hs-input:focus {
-      border-color: rgba(124,58,237,0.55);
-      background: rgba(124,58,237,0.06);
+    /* Hide label */
+    .hs-form-wrap .hsfc-FieldLabel { display: none !important; }
+    /* Input */
+    .hs-form-wrap .hsfc-TextInput {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 50px !important;
+      background: #FFFFFF !important;
+      border: 1px solid rgba(124,58,237,0.25) !important;
+      border-right: none !important;
+      border-radius: 10px 0 0 10px !important;
+      padding: 14px 18px !important;
+      color: #18181B !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 0.95rem !important;
+      outline: none !important;
+      box-shadow: none !important;
+      -webkit-appearance: none !important;
     }
-    .hs-form-wrap .hs-submit {
-      flex-shrink: 0;
+    .hs-form-wrap .hsfc-TextInput:focus {
+      border-color: rgba(124,58,237,0.55) !important;
+      background: rgba(124,58,237,0.06) !important;
     }
-    .hs-form-wrap .hs-button {
-      background: #7C3AED;
-      color: #fff;
-      border: none;
-      border-radius: 0 10px 10px 0;
-      padding: 14px 22px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.2s, box-shadow 0.2s;
-      height: 100%;
+    /* Navigation row (submit) sits at end */
+    .hs-form-wrap .hsfc-NavigationRow {
+      flex-shrink: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: stretch !important;
     }
-    .hs-form-wrap .hs-button:hover {
-      background: #6D28D9;
-      box-shadow: 0 0 20px rgba(124,58,237,0.35);
+    .hs-form-wrap .hsfc-NavigationRow__Alerts { display: none !important; }
+    .hs-form-wrap .hsfc-NavigationRow__Buttons {
+      display: flex !important;
+      align-items: stretch !important;
     }
-    .hs-form-wrap .hs-error-msgs {
-      list-style: none;
-      margin: 6px 0 0;
-      padding: 0;
-      font-size: 0.8rem;
-      color: #EF4444;
+    /* Submit button */
+    .hs-form-wrap .hsfc-Button {
+      display: flex !important;
+      align-items: center !important;
+      background: #7C3AED !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 0 10px 10px 0 !important;
+      padding: 14px 22px !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 0.95rem !important;
+      font-weight: 500 !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      transition: background 0.2s, box-shadow 0.2s !important;
+      -webkit-appearance: none !important;
+      height: auto !important;
     }
-    .hs-form-wrap .submitted-message {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      color: #10B981;
-      padding: 14px 0;
-      text-align: center;
+    .hs-form-wrap .hsfc-Button:hover {
+      background: #6D28D9 !important;
+      box-shadow: 0 0 20px rgba(124,58,237,0.35) !important;
     }
 
     /* ── Responsive ── */
@@ -289,19 +306,21 @@
       .page { padding: 32px 20px; gap: 20px; }
       .wordmark { font-size: 1.1rem; }
       .subhead { font-size: 0.95rem; }
-      .hs-form-wrap .hs-form {
-        flex-direction: column;
-        gap: 10px;
+      .hs-form-wrap .hsfc-Step__Content {
+        flex-direction: column !important;
+        gap: 10px !important;
       }
-      .hs-form-wrap .hs-input {
-        border-right: 1px solid rgba(124,58,237,0.25);
-        border-radius: 10px;
-        width: 100%;
+      .hs-form-wrap .hsfc-TextInput {
+        border-right: 1px solid rgba(124,58,237,0.25) !important;
+        border-radius: 10px !important;
       }
-      .hs-form-wrap .hs-button {
-        border-radius: 10px;
-        width: 100%;
-        padding: 14px;
+      .hs-form-wrap .hsfc-NavigationRow { width: 100% !important; }
+      .hs-form-wrap .hsfc-NavigationRow__Buttons { width: 100% !important; }
+      .hs-form-wrap .hsfc-Button {
+        border-radius: 10px !important;
+        width: 100% !important;
+        padding: 14px !important;
+        justify-content: center !important;
       }
     }
   </style>
@@ -345,5 +364,98 @@
 
 
 
+  <script>
+    // Force inline layout after HubSpot developer-embed renders (uses hsfc-* classes)
+    function styleHsForm() {
+      const content = document.querySelector('.hs-form-wrap .hsfc-Step__Content');
+      if (!content) return false;
+
+      const isMobile = window.innerWidth <= 520;
+
+      // Step content: flex row (or column on mobile)
+      content.style.setProperty('display', 'flex', 'important');
+      content.style.setProperty('flex-wrap', 'nowrap', 'important');
+      content.style.setProperty('align-items', 'stretch', 'important');
+      content.style.setProperty('width', '100%', 'important');
+      content.style.setProperty('gap', isMobile ? '10px' : '0', 'important');
+      content.style.setProperty('flex-direction', isMobile ? 'column' : 'row', 'important');
+
+      // Field row
+      const row = content.querySelector('.hsfc-Row');
+      if (row) { row.style.setProperty('flex', '1 1 auto', 'important'); row.style.setProperty('margin', '0', 'important'); }
+
+      // Label: hide
+      content.querySelectorAll('.hsfc-FieldLabel').forEach(el => el.style.setProperty('display', 'none', 'important'));
+
+      // Input
+      const input = content.querySelector('.hsfc-TextInput');
+      if (input) {
+        input.style.setProperty('width', '100%', 'important');
+        input.style.setProperty('min-height', '50px', 'important');
+        input.style.setProperty('background', '#FFFFFF', 'important');
+        input.style.setProperty('border', '1px solid rgba(124,58,237,0.25)', 'important');
+        input.style.setProperty('border-right', isMobile ? '1px solid rgba(124,58,237,0.25)' : 'none', 'important');
+        input.style.setProperty('border-radius', isMobile ? '10px' : '10px 0 0 10px', 'important');
+        input.style.setProperty('padding', '14px 18px', 'important');
+        input.style.setProperty('color', '#18181B', 'important');
+        input.style.setProperty('font-family', "'Inter', sans-serif", 'important');
+        input.style.setProperty('font-size', '0.95rem', 'important');
+        input.style.setProperty('box-shadow', 'none', 'important');
+        input.style.setProperty('-webkit-appearance', 'none', 'important');
+      }
+
+      // Nav row — must be width:auto so it doesn't swallow all flex space
+      const nav = content.querySelector('.hsfc-NavigationRow');
+      if (nav) {
+        nav.style.setProperty('flex-shrink', '0', 'important');
+        nav.style.setProperty('flex-grow', '0', 'important');
+        nav.style.setProperty('width', isMobile ? '100%' : 'auto', 'important');
+        nav.style.setProperty('margin', '0', 'important');
+        nav.style.setProperty('display', 'flex', 'important');
+        nav.style.setProperty('align-items', 'stretch', 'important');
+      }
+
+      // Alerts: hide
+      const alerts = content.querySelector('.hsfc-NavigationRow__Alerts');
+      if (alerts) alerts.style.setProperty('display', 'none', 'important');
+
+      const btns = content.querySelector('.hsfc-NavigationRow__Buttons');
+      if (btns) {
+        btns.style.setProperty('display', 'flex', 'important');
+        btns.style.setProperty('align-items', 'stretch', 'important');
+        if (isMobile) btns.style.setProperty('width', '100%', 'important');
+      }
+
+      // Button
+      const btn = content.querySelector('.hsfc-Button');
+      if (btn) {
+        btn.style.setProperty('display', 'flex', 'important');
+        btn.style.setProperty('align-items', 'center', 'important');
+        btn.style.setProperty('justify-content', 'center', 'important');
+        btn.style.setProperty('background', '#7C3AED', 'important');
+        btn.style.setProperty('color', '#fff', 'important');
+        btn.style.setProperty('border', 'none', 'important');
+        btn.style.setProperty('border-radius', isMobile ? '10px' : '0 10px 10px 0', 'important');
+        btn.style.setProperty('padding', '14px 22px', 'important');
+        btn.style.setProperty('font-family', "'Inter', sans-serif", 'important');
+        btn.style.setProperty('font-size', '0.95rem', 'important');
+        btn.style.setProperty('font-weight', '500', 'important');
+        btn.style.setProperty('cursor', 'pointer', 'important');
+        btn.style.setProperty('white-space', 'nowrap', 'important');
+        if (isMobile) btn.style.setProperty('width', '100%', 'important');
+      }
+
+      return true;
+    }
+
+    // Poll until HubSpot renders, then apply + watch resize
+    const timer = setInterval(() => {
+      if (styleHsForm()) {
+        clearInterval(timer);
+        window.addEventListener('resize', styleHsForm);
+      }
+    }, 100);
+    setTimeout(() => clearInterval(timer), 10000); // give up after 10s
+  </script>
 </body>
 </html>
