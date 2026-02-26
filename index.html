@@ -3,378 +3,279 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BankRails — AI Agents Can Think. Now They Can Pay.</title>
+  <title>BankRails — The Payment Layer for AI Agents</title>
 
   <!-- Open Graph -->
-  <meta property="og:title" content="BankRails — AI Agents Can Think. Now They Can Pay." />
-  <meta property="og:description" content="BankRails is the payment infrastructure layer for the agent era — verified agent identity, per-agent spending controls, conditional transaction logic, and a full audit trail. Built on regulated banking rails, not crypto." />
+  <meta property="og:title" content="BankRails — The Payment Layer for AI Agents" />
+  <meta property="og:description" content="AI Agents Can Think. Now They Can Pay. Join the waitlist." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://bankrails.ai" />
   <meta property="og:image" content="https://bankrails.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BankRails — AI Agents Can Think. Now They Can Pay." />
-  <meta name="twitter:description" content="Payment infrastructure for the agent era. Per-agent budgets, conditional logic, full audit trail. Built on regulated banking rails." />
+  <meta name="twitter:title" content="BankRails — The Payment Layer for AI Agents" />
+  <meta name="twitter:description" content="AI Agents Can Think. Now They Can Pay. Join the waitlist." />
   <meta name="twitter:image" content="https://bankrails.ai/og-image.png" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: #0D0D0F;
+      color: #F4F4F5;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 24px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Radial purple glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.20) 0%, rgba(124,58,237,0.06) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 28px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* ── Wordmark ── */
+    .wordmark-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .wordmark {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: #F4F4F5;
+      line-height: 1;
+    }
+
+    /* Two thin rail lines below the wordmark */
+    .rail-lines {
+      display: block;
+      width: 100%;
+      height: 8px;
+      margin-top: 5px;
+      position: relative;
+    }
+    .rail-lines::before,
+    .rail-lines::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: rgba(124, 58, 237, 0.60);
+    }
+    .rail-lines::before { top: 0; }
+    .rail-lines::after  { top: 4px; }
+
+    /* ── Headline ── */
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: #F4F4F5;
+    }
+
+    /* ── Subhead ── */
+    .subhead {
+      font-size: 1.1rem;
+      line-height: 1.65;
+      color: #71717A;
+      max-width: 480px;
+    }
+
+    /* ── Form ── */
+    .form {
+      display: flex;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .email-input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      padding: 14px 18px;
+      color: #F4F4F5;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .email-input::placeholder { color: #52525B; }
+    .email-input:focus {
+      border-color: rgba(124,58,237,0.55);
+      background: rgba(124,58,237,0.06);
+    }
+
+    .submit-btn {
+      flex-shrink: 0;
+      background: #7C3AED;
+      color: #fff;
+      border: none;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .submit-btn:hover {
+      background: #6D28D9;
+      box-shadow: 0 0 20px rgba(124,58,237,0.35);
+    }
+    .submit-btn:active { background: #5B21B6; }
+
+    /* Success state */
+    .success-msg {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #10B981;
+      padding: 14px 0;
+      animation: fadeUp 0.3s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Trust badge ── */
+    .trust {
+      font-size: 0.8rem;
+      color: #52525B;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .trust a {
+      color: #52525B;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+    .trust a:hover { color: #A1A1AA; }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .form {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .email-input {
+        border-right: 1px solid rgba(255,255,255,0.16);
+        border-radius: 10px;
+        width: 100%;
+      }
+      .email-input:focus {
+        border-color: rgba(124,58,237,0.55);
+      }
+      .submit-btn {
+        border-radius: 10px;
+        width: 100%;
+        padding: 14px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ─── NAV ────────────────────────────────────────────────────────── -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="wordmark">bankrails<span class="wordmark-dot">.</span>ai</a>
-      <a href="#waitlist" class="btn btn-sm">Join Waitlist</a>
-    </div>
-  </nav>
+  <main class="page">
 
-  <!-- ─── HERO ───────────────────────────────────────────────────────── -->
-  <section class="hero" id="top">
-    <div class="hero-glow" aria-hidden="true"></div>
-
-    <!-- Agent transaction visualization -->
-    <div class="hero-viz" aria-hidden="true">
-      <div class="viz-node viz-node--orchestrator">
-        <span class="mono tag">orchestrator_v2</span>
-      </div>
-      <div class="viz-line viz-line--1"></div>
-      <div class="viz-node viz-node--agent">
-        <span class="mono tag">agent_001</span>
-      </div>
-      <div class="viz-line viz-line--2"></div>
-      <div class="viz-node viz-node--rails">
-        <span class="mono tag">banking_rails</span>
-      </div>
-      <div class="viz-pulse viz-pulse--1" aria-hidden="true"></div>
-      <div class="viz-pulse viz-pulse--2" aria-hidden="true"></div>
+    <!-- Wordmark -->
+    <div class="wordmark-wrap">
+      <span class="wordmark">bankrails</span>
+      <span class="rail-lines" aria-hidden="true"></span>
     </div>
 
-    <div class="container hero-content">
-      <div class="hero-eyebrow mono">
-        <span class="dot dot--green"></span>
-        Early Access Now Open
-      </div>
-      <h1 class="hero-headline">
-        AI Agents Can Think.<br />Now They Can Pay.
-      </h1>
-      <p class="hero-subhead">
-        BankRails is the payment infrastructure layer for the agent era — verified agent identity, per-agent spending controls, conditional transaction logic, and a full audit trail. Built on regulated banking rails, not crypto.
-      </p>
+    <!-- Headline -->
+    <h1 class="headline">AI Agents Can Think.<br />Now They Can Pay.</h1>
 
-      <form class="waitlist-form hero-form" id="waitlist-hero"
-            action="#" method="POST" onsubmit="handleWaitlist(event, 'hero')">
-        <!-- HubSpot form placeholder: replace this form with HubSpot embed, form ID: TBD (segment: bankrails-waitlist) -->
-        <input
-          type="email"
-          name="email"
-          placeholder="your@email.com"
-          required
-          class="email-input"
-          aria-label="Email address"
-        />
-        <button type="submit" class="btn btn-primary">
-          Join the Waitlist
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </form>
-      <p class="trust-line mono">Powered by Bank Shot — built on regulated banking infrastructure.</p>
-    </div>
+    <!-- Subhead -->
+    <p class="subhead">The payment layer for autonomous AI workflows. Built on real banking rails, not crypto.</p>
 
-    <div class="hero-wave" aria-hidden="true">
-      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#0D0D0F"/>
-      </svg>
-    </div>
-  </section>
+    <!-- Waitlist form -->
+    <!-- HUBSPOT_FORM_ID -->
+    <form class="form" id="waitlist-form" novalidate onsubmit="handleSubmit(event)">
+      <input
+        class="email-input"
+        type="email"
+        name="email"
+        placeholder="your@email.com"
+        required
+        autocomplete="email"
+        aria-label="Email address"
+      />
+      <button class="submit-btn" type="submit">Join the Waitlist</button>
+    </form>
 
-  <!-- ─── PROBLEM ────────────────────────────────────────────────────── -->
-  <section class="section problem" id="problem">
-    <div class="container">
-      <div class="section-label mono">
-        <span class="dot dot--red"></span>
-        The Problem
-      </div>
-      <h2 class="section-headline">Your agents are ready to work.<br />Your payment infrastructure isn't.</h2>
-      <p class="section-subhead">Right now, the only options for giving an AI agent access to funds are blunt instruments built for humans, not agents.</p>
+    <!-- Trust badge -->
+    <p class="trust">
+      <span aria-hidden="true">🔒</span>
+      Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
+    </p>
 
-      <div class="problem-grid">
-        <div class="glass-card problem-card">
-          <div class="card-icon card-icon--warning">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="2" y="6" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M2 10h20" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="mono card-label">option_a</span>
-          <h3 class="card-title">Hand it your credit card</h3>
-          <p class="card-body">No controls. No limits. No audit trail. Your agent has the same access as your CEO — and zero accountability for how it spends.</p>
-          <ul class="problem-list">
-            <li>No per-agent spending limits</li>
-            <li>No transaction conditions or logic</li>
-            <li>No attribution or compliance trail</li>
-          </ul>
-        </div>
+  </main>
 
-        <div class="glass-card problem-card problem-card--mid">
-          <div class="card-icon card-icon--warning">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M3 11h18M7 7V5a2 2 0 0 1 4 0v2" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="mono card-label">option_b</span>
-          <h3 class="card-title">Give it a prepaid card</h3>
-          <p class="card-body">A balance and a limit — that's it. There's no way to tell it: only spend on approved vendors, require sign-off over $100, or stop if the transaction looks unusual.</p>
-          <ul class="problem-list">
-            <li>No conditional logic or approval rules</li>
-            <li>No vendor whitelisting or blocking</li>
-            <li>No compliance reporting</li>
-          </ul>
-        </div>
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const email = form.querySelector('input[type="email"]').value.trim();
+      if (!email) return;
 
-        <div class="glass-card problem-card">
-          <div class="card-icon card-icon--error">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="mono card-label">option_c</span>
-          <h3 class="card-title">Give it nothing</h3>
-          <p class="card-body">Your autonomous agent pipeline stalls every time it hits a payment. You're back in the loop, manually approving every transaction. That's not agentic — that's just automation with extra steps.</p>
-          <ul class="problem-list">
-            <li>Human bottleneck on every transaction</li>
-            <li>Blocks multi-agent workflows entirely</li>
-            <li>Zero progress toward actual autonomy</li>
-          </ul>
-        </div>
-      </div>
+      // TODO: replace with HubSpot form submission
+      // HubSpot portal ID + form ID: TBD (segment: bankrails-waitlist)
+      console.log('[BankRails] waitlist signup:', email);
 
-      <div class="problem-callout glass-card">
-        <span class="mono card-label">the_gap</span>
-        <p>Neither was built for agents. Both create real exposure. There's no infrastructure today that lets you set different budgets for different agents in the same workflow — with conditional logic, compliance reporting, and real settlement.</p>
-        <p>That's what BankRails is.</p>
-      </div>
-    </div>
-  </section>
+      const msg = document.createElement('p');
+      msg.className = 'success-msg';
+      msg.textContent = "You're on the list. We'll be in touch.";
+      form.replaceWith(msg);
+    }
+  </script>
 
-  <!-- ─── FEATURES ───────────────────────────────────────────────────── -->
-  <section class="section features" id="features">
-    <div class="container">
-      <div class="section-label mono">
-        <span class="dot dot--purple"></span>
-        The Solution
-      </div>
-      <h2 class="section-headline">Programmable payment logic<br />built for the agent era.</h2>
-      <p class="section-subhead">BankRails gives each AI agent a verified payment identity with the controls that actually matter.</p>
-
-      <div class="bento-grid">
-        <!-- Per-agent budgets -->
-        <div class="glass-card bento-card bento-card--large">
-          <span class="mono card-label">per_agent_budgets</span>
-          <h3 class="card-title">Per-agent budgets and limits</h3>
-          <p class="card-body">Set spending limits by agent, by category, by time window. Your orchestrator agent can have a $10K project budget. Your sub-agents get $200 each. Different agents, different controls — all in one workflow.</p>
-          <div class="code-snippet">
-            <span class="mono">
-              <span class="code-key">agent</span><span class="code-op">:</span> <span class="code-val">"orchestrator_v2"</span><br/>
-              <span class="code-key">budget</span><span class="code-op">:</span> <span class="code-val">$10,000</span><span class="code-comment"> // project</span><br/>
-              <span class="code-key">sub_agents</span><span class="code-op">:</span> <span class="code-val">$200</span><span class="code-comment"> // each</span>
-            </span>
-          </div>
-        </div>
-
-        <!-- Conditional logic -->
-        <div class="glass-card bento-card">
-          <span class="mono card-label">conditional_logic</span>
-          <h3 class="card-title">Conditional transaction logic</h3>
-          <p class="card-body">Money moves when conditions are met — not before. Define approval rules, spending triggers, and automatic holds based on transaction type, amount, or agent behavior.</p>
-        </div>
-
-        <!-- Audit trail -->
-        <div class="glass-card bento-card">
-          <span class="mono card-label">audit_trail</span>
-          <h3 class="card-title">Full audit trail</h3>
-          <p class="card-body">Every transaction logged, timestamped, and attributed to a specific agent. Built for compliance from the ground up. When your CFO asks, you have the answer.</p>
-        </div>
-
-        <!-- Real banking rails -->
-        <div class="glass-card bento-card bento-card--wide">
-          <div class="bento-split">
-            <div>
-              <span class="mono card-label">banking_rails</span>
-              <h3 class="card-title">Real banking rails</h3>
-              <p class="card-body">Transactions settle through real banking infrastructure. No crypto. No stablecoins. Chargebacks, dispute resolution, and counterparty protection that enterprise finance teams actually require.</p>
-            </div>
-            <div class="rails-visual" aria-hidden="true">
-              <div class="rail-line"></div>
-              <div class="rail-line"></div>
-              <div class="rail-train"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- KYA -->
-        <div class="glass-card bento-card bento-card--accent">
-          <span class="mono card-label">KYA</span>
-          <h3 class="card-title">Know Your Agent</h3>
-          <p class="card-body">Verify the agents transacting in your system. Whitelist trusted agents, block unknown ones, and get alerts when something looks wrong.</p>
-          <div class="kya-badge">
-            <span class="dot dot--green"></span>
-            <span class="mono kya-text">agent_verified</span>
-          </div>
-        </div>
-
-        <!-- A2A -->
-        <div class="glass-card bento-card bento-card--soon">
-          <div class="soon-badge mono">coming soon</div>
-          <span class="mono card-label">agent_to_agent</span>
-          <h3 class="card-title">Agent-to-agent payments</h3>
-          <p class="card-body">Pay other agents directly. The foundation for agent commerce: your orchestrator allocates budgets, sub-agents transact independently, everything settles cleanly.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── HOW IT WORKS ───────────────────────────────────────────────── -->
-  <section class="section howto" id="how-it-works">
-    <div class="container">
-      <div class="section-label mono">
-        <span class="dot dot--purple"></span>
-        How It Works
-      </div>
-      <h2 class="section-headline">Three steps. Then your agents take it from there.</h2>
-
-      <div class="steps-row">
-        <div class="step">
-          <div class="step-num mono">01</div>
-          <h3 class="step-title">Set up</h3>
-          <p class="step-body">Connect BankRails to your agent stack. Define your agents, assign identities, set spending rules and approval logic.</p>
-        </div>
-        <div class="step-connector" aria-hidden="true"></div>
-        <div class="step">
-          <div class="step-num mono">02</div>
-          <h3 class="step-title">Load funds</h3>
-          <p class="step-body">Fund your BankRails account via ACH or wire. Allocate budgets to agents or workflows — all under your control.</p>
-        </div>
-        <div class="step-connector" aria-hidden="true"></div>
-        <div class="step">
-          <div class="step-num mono">03</div>
-          <h3 class="step-title">Let agents work</h3>
-          <p class="step-body">Your agents transact within their limits. You get full visibility, compliance logs, and can intervene at any time. Or just let them run.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── WHY NOT CRYPTO ─────────────────────────────────────────────── -->
-  <section class="section crypto-section" id="why-not-crypto">
-    <div class="container">
-      <div class="glass-card crypto-card">
-        <div class="section-label mono">
-          <span class="dot dot--muted"></span>
-          Why Not Crypto?
-        </div>
-        <h2 class="section-headline crypto-headline">It works in boardrooms,<br />not just Discord.</h2>
-        <p class="section-subhead">Skyfire and others settle agent transactions in USDC on the blockchain. That works fine for developers and crypto-native startups.</p>
-        <p class="section-subhead">It doesn't work for the companies actually deploying AI at scale:</p>
-
-        <div class="crypto-list">
-          <div class="crypto-item">
-            <span class="mono crypto-code">no_chargebacks</span>
-            <p>Once it's gone, it's gone. No dispute resolution, no recourse on bad transactions.</p>
-          </div>
-          <div class="crypto-item">
-            <span class="mono crypto-code">treasury_exposure</span>
-            <p>Stablecoin treasury exposure on every transaction. Not a conversation any CFO wants to have.</p>
-          </div>
-          <div class="crypto-item">
-            <span class="mono crypto-code">procurement_blocked</span>
-            <p>Hard no from any mid-market or enterprise CFO. Regulatory uncertainty makes procurement conversations impossible.</p>
-          </div>
-          <div class="crypto-item">
-            <span class="mono crypto-code">regulatory_risk</span>
-            <p>The rules are still being written. That's not a foundation you want under your payment infrastructure.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── ORIGIN / CREDIBILITY ───────────────────────────────────────── -->
-  <section class="section origin" id="about">
-    <div class="container">
-      <div class="glass-card origin-card">
-        <div class="section-label mono">
-          <span class="dot dot--purple"></span>
-          Origin
-        </div>
-        <h2 class="section-headline">Built on infrastructure<br />that already works.</h2>
-        <p class="origin-body">BankRails is powered by Bank Shot, which has spent years building conditional disbursement infrastructure for the insurance and real estate industries — where money has to move between multiple parties with different roles and permissions, and only when specific conditions are confirmed.</p>
-        <p class="origin-body">That's the same architecture agents need. We didn't have to invent it.</p>
-        <div class="bankshot-lockup">
-          <span class="bankshot-powered mono">Powered by</span>
-          <a href="https://getbankshot.com" target="_blank" rel="noopener noreferrer" class="bankshot-wordmark">Bank Shot</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── BOTTOM CTA ─────────────────────────────────────────────────── -->
-  <section class="section cta-section" id="waitlist">
-    <div class="container">
-      <div class="cta-inner">
-        <div class="section-label mono">
-          <span class="dot dot--green"></span>
-          Early Access
-        </div>
-        <h2 class="cta-headline">The agent economy needs financial infrastructure.<br />We're building it.</h2>
-        <p class="cta-subhead">We're onboarding early access teams now. No pitch decks. No sales calls. Just early access.</p>
-
-        <form class="waitlist-form cta-form" id="waitlist-bottom"
-              action="#" method="POST" onsubmit="handleWaitlist(event, 'bottom')">
-          <!-- HubSpot form placeholder: replace this form with HubSpot embed, form ID: TBD (segment: bankrails-waitlist) -->
-          <input
-            type="email"
-            name="email"
-            placeholder="your@email.com"
-            required
-            class="email-input"
-            aria-label="Email address"
-          />
-          <button type="submit" class="btn btn-primary">
-            Join the Waitlist
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </form>
-        <p class="trust-line mono">Powered by Bank Shot.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <span class="wordmark footer-wordmark">bankrails<span class="wordmark-dot">.</span>ai</span>
-      <div class="footer-links">
-        <a href="https://getbankshot.com" target="_blank" rel="noopener noreferrer" class="footer-link">Powered by Bank Shot</a>
-        <a href="/privacy" class="footer-link">Privacy</a>
-        <a href="/terms" class="footer-link">Terms</a>
-      </div>
-      <p class="footer-legal">© 2026 BankRails. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="main.js"></script>
 </body>
 </html>
