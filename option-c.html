@@ -37,10 +37,10 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       display: flex;
-      flex-direction: column;
-      align-items: stretch;
+      align-items: center;
+      justify-content: center;
       min-height: 100vh;
-      padding: 0;
+      padding: 40px 24px;
       overflow-x: hidden;
       position: relative;
     }
@@ -58,27 +58,6 @@
       z-index: 0;
     }
 
-    /* ── Nav bar ── */
-    .nav {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      padding: 22px 36px;
-      width: 100%;
-    }
-
-    /* ── Hero (fills remaining viewport) ── */
-    .hero {
-      position: relative;
-      z-index: 1;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 24px 48px;
-    }
-
     .page {
       position: relative;
       z-index: 1;
@@ -86,8 +65,8 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 24px;
-      max-width: 580px;
+      gap: 28px;
+      max-width: 600px;
       width: 100%;
     }
 
@@ -206,11 +185,12 @@
 
     /* ── Tagline ── */
     .tagline {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       line-height: 1.6;
       color: #52525B;
       max-width: 480px;
       text-align: center;
+      font-style: italic;
     }
 
     /* ── Trust pills row ── */
@@ -358,13 +338,9 @@
 
     /* ── Responsive ── */
     @media (max-width: 520px) {
-      .nav { padding: 16px 20px; }
-      .hero { padding: 0 20px 40px; align-items: flex-start; padding-top: 32px; }
-      .page { gap: 20px; text-align: left; align-items: flex-start; }
+      .page { padding: 32px 20px; gap: 20px; }
       .wordmark { font-size: 1.1rem; }
-      .tagline { font-size: 1rem; text-align: left; }
-      .trust-pills { justify-content: flex-start; }
-      .trust { text-align: left; }
+      .subhead { font-size: 0.95rem; }
       .hs-form-wrap .hsfc-Step__Content {
         flex-direction: column !important;
         gap: 10px !important;
@@ -386,46 +362,50 @@
 </head>
 <body>
 
-  <!-- Nav bar -->
-  <nav class="nav">
+  <main class="page">
+
+    <!-- Wordmark -->
     <div class="wordmark-wrap">
       <span class="wordmark">bankrails</span>
       <span class="rail-lines" aria-hidden="true"></span>
     </div>
-  </nav>
 
-  <!-- Hero -->
-  <div class="hero">
-    <main class="page">
+    <!-- Headline -->
+    <h1 class="headline">Your Agents Are Ready. Your Payments Aren't.</h1>
 
-      <!-- Headline -->
-      <h1 class="headline">Your Agents Are Ready. Your Payments Aren't.</h1>
+    <!-- Subhead -->
+    <p class="subhead">The payment layer for autonomous AI workflows.</p>
 
-      <!-- Tagline -->
-      <p class="tagline">No wallets. No gas fees. No rug pulls. Just payments that actually work.</p>
+    <!-- Tagline -->
+    <p class="tagline">No wallets to manage. No gas fees. No rug pulls. Just payments that work the way you expect them to.</p>
 
-      <!-- Waitlist form (HubSpot) -->
-      <div class="hs-form-wrap">
-        <div class="hs-form-html" data-region="na1"
-          data-form-id="63247df3-fd8f-4fdd-b8cf-991d56bcdab6"
-          data-portal-id="50799094"></div>
-      </div>
+    <!-- No-crypto callout -->
+    <p class="no-crypto-pill">
+      <span aria-hidden="true">🏦</span>
+      No crypto. No stablecoins. Real ACH &amp; wire rails.
+    </p>
 
-      <!-- Trust pills -->
-      <div class="trust-pills">
-        <span class="trust-pill"><span class="trust-pill-check">✓</span> Real ACH &amp; wire transfers</span>
-        <span class="trust-pill"><span class="trust-pill-check">✓</span> Full audit trail</span>
-        <span class="trust-pill"><span class="trust-pill-check">✓</span> Reversible payments</span>
-      </div>
+    <!-- Waitlist form (HubSpot) -->
+    <div class="hs-form-wrap">
+      <div class="hs-form-html" data-region="na1"
+        data-form-id="63247df3-fd8f-4fdd-b8cf-991d56bcdab6"
+        data-portal-id="50799094"></div>
+    </div>
 
-      <!-- Trust badge -->
-      <p class="trust">
-        <span aria-hidden="true">🔒</span>
-        Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
-      </p>
+    <!-- Trust pills -->
+    <div class="trust-pills">
+      <span class="trust-pill"><span class="trust-pill-check">✓</span> Real ACH &amp; wire transfers</span>
+      <span class="trust-pill"><span class="trust-pill-check">✓</span> Full audit trail</span>
+      <span class="trust-pill"><span class="trust-pill-check">✓</span> Reversible payments</span>
+    </div>
 
-    </main>
-  </div>
+    <!-- Trust badge -->
+    <p class="trust">
+      <span aria-hidden="true">🔒</span>
+      Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
+    </p>
+
+  </main>
 
 
 
