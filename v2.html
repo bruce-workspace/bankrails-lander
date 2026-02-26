@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BankRails — The Payment Layer for AI Agents</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="BankRails — The Payment Layer for AI Agents" />
+  <meta property="og:description" content="Your Agents Are Ready.<br>Your Payments Aren't. Join the waitlist." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bankrails.ai" />
+  <meta property="og:image" content="https://bankrails.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BankRails — The Payment Layer for AI Agents" />
+  <meta name="twitter:description" content="Your Agents Are Ready.<br>Your Payments Aren't. Join the waitlist." />
+  <meta name="twitter:image" content="https://bankrails.ai/og-image.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400&display=swap" rel="stylesheet" />
+  <script src="https://js.hsforms.net/forms/embed/developer/50799094.js" defer></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: #F5F3FF;
+      color: #18181B;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 24px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Radial purple glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.12) 0%, rgba(124,58,237,0.04) 50%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 28px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* ── Wordmark ── */
+    .wordmark-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .wordmark {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: #18181B;
+      line-height: 1;
+    }
+
+    /* Two thin rail lines below the wordmark */
+    .rail-lines {
+      display: block;
+      width: 100%;
+      height: 8px;
+      margin-top: 5px;
+      position: relative;
+    }
+    .rail-lines::before,
+    .rail-lines::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: rgba(124, 58, 237, 0.60);
+    }
+    .rail-lines::before { top: 0; }
+    .rail-lines::after  { top: 4px; }
+
+    /* ── Headline ── */
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.9rem, 8vw, 4.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: #18181B;
+    }
+
+    /* ── Subhead ── */
+    .subhead {
+      font-size: 1.1rem;
+      line-height: 1.65;
+      color: #71717A;
+      max-width: 480px;
+    }
+
+    /* ── Form ── */
+    .form {
+      display: flex;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .email-input {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1px solid rgba(124,58,237,0.25);
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      padding: 14px 18px;
+      color: #18181B;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .email-input::placeholder { color: #71717A; }
+    .email-input:focus {
+      border-color: rgba(124,58,237,0.55);
+      background: rgba(124,58,237,0.06);
+    }
+
+    .submit-btn {
+      flex-shrink: 0;
+      background: #7C3AED;
+      color: #fff;
+      border: none;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .submit-btn:hover {
+      background: #6D28D9;
+      box-shadow: 0 0 20px rgba(124,58,237,0.35);
+    }
+    .submit-btn:active { background: #5B21B6; }
+
+    /* Success state */
+    .success-msg {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #10B981;
+      padding: 14px 0;
+      animation: fadeUp 0.3s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── No-crypto pill ── */
+    .no-crypto-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(124,58,237,0.08);
+      border: 1px solid rgba(124,58,237,0.20);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #6D28D9;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Trust badge ── */
+    .trust {
+      font-size: 0.8rem;
+      color: #71717A;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .trust a {
+      color: #71717A;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+    .trust a:hover { color: #A1A1AA; }
+
+    /* ── HubSpot form overrides ── */
+    .hs-form-wrap {
+      width: 100%;
+      max-width: 480px;
+    }
+    .hs-form-wrap .hs-form {
+      display: flex;
+      width: 100%;
+    }
+    .hs-form-wrap .hs-form-field {
+      flex: 1;
+      margin: 0;
+    }
+    .hs-form-wrap label { display: none; }
+    .hs-form-wrap .hs-input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid rgba(124,58,237,0.25);
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      padding: 14px 18px;
+      color: #18181B;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      box-shadow: none;
+      -webkit-appearance: none;
+    }
+    .hs-form-wrap .hs-input::placeholder { color: #71717A; }
+    .hs-form-wrap .hs-input:focus {
+      border-color: rgba(124,58,237,0.55);
+      background: rgba(124,58,237,0.06);
+    }
+    .hs-form-wrap .hs-submit {
+      flex-shrink: 0;
+    }
+    .hs-form-wrap .hs-button {
+      background: #7C3AED;
+      color: #fff;
+      border: none;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, box-shadow 0.2s;
+      height: 100%;
+    }
+    .hs-form-wrap .hs-button:hover {
+      background: #6D28D9;
+      box-shadow: 0 0 20px rgba(124,58,237,0.35);
+    }
+    .hs-form-wrap .hs-error-msgs {
+      list-style: none;
+      margin: 6px 0 0;
+      padding: 0;
+      font-size: 0.8rem;
+      color: #EF4444;
+    }
+    .hs-form-wrap .submitted-message {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #10B981;
+      padding: 14px 0;
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .page { padding: 32px 20px; gap: 20px; }
+      .wordmark { font-size: 1.1rem; }
+      .subhead { font-size: 0.95rem; }
+      .hs-form-wrap .hs-form {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .hs-form-wrap .hs-input {
+        border-right: 1px solid rgba(124,58,237,0.25);
+        border-radius: 10px;
+        width: 100%;
+      }
+      .hs-form-wrap .hs-button {
+        border-radius: 10px;
+        width: 100%;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+
+    <!-- Wordmark -->
+    <div class="wordmark-wrap">
+      <span class="wordmark">bankrails</span>
+      <span class="rail-lines" aria-hidden="true"></span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="headline">Your Agents Are Ready. Your Payments Aren't.</h1>
+
+    <!-- Subhead -->
+    <p class="subhead">The payment layer for autonomous AI workflows.</p>
+
+    <!-- No-crypto callout -->
+    <p class="no-crypto-pill">
+      <span aria-hidden="true">🏦</span>
+      No crypto. No stablecoins. Real ACH &amp; wire rails.
+    </p>
+
+    <!-- Waitlist form (HubSpot) -->
+    <div class="hs-form-wrap">
+      <div class="hs-form-html" data-region="na1"
+        data-form-id="63247df3-fd8f-4fdd-b8cf-991d56bcdab6"
+        data-portal-id="50799094"></div>
+    </div>
+
+    <!-- Trust badge -->
+    <p class="trust">
+      <span aria-hidden="true">🔒</span>
+      Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
+    </p>
+
+  </main>
+
+
+
+</body>
+</html>
