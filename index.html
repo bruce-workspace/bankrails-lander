@@ -152,7 +152,20 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: #0a0018;
+    }
+
+    /* Vignette: top + bottom of screen fade to dark — terminal floats */
+    .screen-vignette {
+      position: absolute;
+      inset: 0;
+      border-radius: 36px;
+      background:
+        linear-gradient(to bottom, #0a0018 0%, transparent 28%),
+        linear-gradient(to top,    #0a0018 0%, transparent 28%);
+      pointer-events: none;
+      z-index: 1;
     }
 
     /* Dissolve right + bottom edges into page — disabled */
@@ -248,6 +261,10 @@
       line-height: 1.1;
       letter-spacing: -0.03em;
       color: #18181B;
+    }
+
+    .headline-2 {
+      color: #7C3AED;
     }
 
     /* ── Subhead ── */
@@ -373,6 +390,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
+      align-self: flex-start;
     }
     .trust a {
       color: #71717A;
@@ -526,7 +544,7 @@
       <main class="page">
 
         <!-- Headline -->
-        <h1 class="headline">Your Agents Are Ready. Your Payments Aren't.</h1>
+        <h1 class="headline">Your Agents Are Ready.<br><span class="headline-2">Your Payments Aren't.</span></h1>
 
         <!-- Tagline -->
         <p class="tagline">No wallets. No gas fees. No rug pulls. Just payments that actually work.</p>
@@ -545,10 +563,8 @@
           <span class="trust-pill"><span class="trust-pill-check">✓</span> Reversible payments</span>
         </div>
 
-        <!-- Trust badge -->
         <p class="trust">
-          <span aria-hidden="true">🔒</span>
-          Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
+          <span aria-hidden="true">🔒</span> Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
         </p>
 
       </main>
@@ -567,6 +583,7 @@
               playsinline
               preload="auto"
             ></video>
+            <div class="screen-vignette"></div>
           </div>
           <div class="phone-btn-right"></div>
           <div class="phone-btn-left-1"></div>
