@@ -501,25 +501,24 @@
     }
 
     /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .hero-inner { flex-direction: column; gap: 40px; align-items: center; }
-      .page { align-items: center; text-align: center; max-width: 100%; }
+    @media (max-width: 900px) {
+      .hero { padding: 20px 32px 40px; overflow: hidden; }
+      .hero-inner { flex-direction: column; gap: 16px; align-items: center; }
+      .page { align-items: center; text-align: center; max-width: 480px; }
       .tagline { text-align: center; }
       .trust-pills { justify-content: center; }
-      .phone-wrap { width: 180px; }
-      .floating-video { width: 260px; }
-      .phone-fade { display: none; }
+      .trust { align-self: center; }
+      .phone-wrap { width: 280px !important; overflow: visible; }
+      .floating-video { width: 100% !important; height: auto !important; margin: 0 !important; }
     }
     @media (max-width: 520px) {
       .nav { padding: 16px 20px; }
-      .hero { padding: 0 20px 40px; align-items: flex-start; padding-top: 32px; }
-      .hero-inner { flex-direction: column; }
-      .phone-wrap { display: none; }
-      .page { gap: 20px; text-align: left; align-items: flex-start; }
-      .wordmark { font-size: 1.1rem; }
-      .tagline { font-size: 1rem; text-align: left; }
+      .hero { padding: 16px 20px 40px; }
+      .page { gap: 16px; text-align: left; align-items: flex-start; }
+      .page .tagline { text-align: left; }
       .trust-pills { justify-content: flex-start; }
-      .trust { text-align: left; }
+      .trust { align-self: flex-start; }
+      .phone-wrap { width: 240px !important; }
       .hs-form-wrap .hsfc-Step__Content {
         flex-direction: column !important;
         gap: 10px !important;
