@@ -109,40 +109,43 @@
       align-items: center;
     }
 
-    /* Outer shell — iPhone proportions ~9:19.5 */
+    /* Outer shell — modern iPhone: screen flush to edges */
     .phone-shell {
       position: relative;
       width: 240px;
       height: 500px;
       border-radius: 44px;
-      background: linear-gradient(145deg, #2a1060 0%, #120830 60%, #0a0018 100%);
+      background: #0a0018;
       box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.08),
+        inset 0 0 0 1px rgba(255,255,255,0.1),
+        inset 0 0 0 8px #1a0840,
         0 50px 120px rgba(124,58,237,0.5),
         0 20px 40px rgba(0,0,0,0.4);
       transform: rotate(-4deg);
-      padding: 14px 10px;
-      display: flex;
-      flex-direction: column;
+      padding: 0;
+      overflow: hidden;
     }
 
-    /* Dynamic island */
+    /* Dynamic island — floats over video */
     .phone-island {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
       width: 80px;
       height: 26px;
       background: #000;
       border-radius: 20px;
-      margin: 0 auto 8px;
-      flex-shrink: 0;
+      z-index: 2;
     }
 
-    /* Screen area */
+    /* Screen area — fills full shell */
     .phone-screen {
-      flex: 1;
-      border-radius: 28px;
+      position: absolute;
+      inset: 0;
+      border-radius: 36px;
       overflow: hidden;
       background: #000;
-      position: relative;
     }
 
     .phone-screen video {
@@ -150,7 +153,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 28px;
     }
 
     /* Dissolve right + bottom edges into page — disabled */
