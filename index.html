@@ -112,37 +112,37 @@
     .phone-frame {
       position: relative;
       width: 260px;
-      border-radius: 36px;
+      border-radius: 32px;
       overflow: hidden;
+      transform: rotate(-2deg);
       box-shadow:
-        0 0 0 8px #1a0a3a,
-        0 0 0 10px #2d1060,
-        0 30px 80px rgba(124,58,237,0.45),
-        0 0 120px rgba(124,58,237,0.2);
+        0 40px 100px rgba(124,58,237,0.35),
+        0 0 0 1px rgba(124,58,237,0.15);
       background: #0a0014;
     }
 
     .phone-frame video {
       display: block;
       width: 100%;
-      border-radius: 28px;
+      border-radius: 31px;
     }
 
-    /* Right edge fades into lander bg */
+    /* Fade right + bottom edges into lander bg */
     .phone-fade {
       position: absolute;
-      top: 0; right: -1px; bottom: 0;
-      width: 55%;
-      background: linear-gradient(to left, #F5F3FF 0%, transparent 100%);
-      border-radius: 0 28px 28px 0;
+      inset: 0;
+      border-radius: 31px;
+      background:
+        linear-gradient(to left,  #F5F3FF 0%, transparent 45%),
+        linear-gradient(to bottom,#F5F3FF 0%, transparent 25%);
       pointer-events: none;
     }
 
-    /* Glow behind phone */
+    /* Big ambient glow — bleeds into lander */
     .phone-glow {
       position: absolute;
-      inset: -50px -80px;
-      background: radial-gradient(ellipse at center, rgba(124,58,237,0.2) 0%, transparent 70%);
+      inset: -80px -120px;
+      background: radial-gradient(ellipse at 60% 50%, rgba(124,58,237,0.28) 0%, rgba(124,58,237,0.08) 45%, transparent 70%);
       z-index: -1;
       pointer-events: none;
     }
