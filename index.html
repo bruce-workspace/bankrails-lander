@@ -45,6 +45,17 @@
       position: relative;
     }
 
+    /* Right-edge fade overlay on hero — makes video bleed look intentional */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 120px;
+      background: linear-gradient(to right, transparent, #F5F3FF);
+      z-index: 10;
+      pointer-events: none;
+    }
+
     /* Radial purple glow */
     body::before {
       content: '';
@@ -77,15 +88,16 @@
       align-items: center;
       justify-content: center;
       padding: 20px 48px 48px;
+      overflow: hidden;
     }
 
     .hero-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 56px;
+      gap: 24px;
       width: 100%;
-      max-width: 1100px;
+      max-width: 960px;
     }
 
     .page {
@@ -385,12 +397,13 @@
 
     /* ── Trust badge ── */
     .trust {
-      font-size: 0.8rem;
-      color: #71717A;
+      font-size: 0.85rem;
+      color: #52525B;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       align-self: flex-start;
+      font-weight: 500;
     }
     .trust a {
       color: #71717A;
@@ -494,7 +507,7 @@
       .tagline { text-align: center; }
       .trust-pills { justify-content: center; }
       .phone-wrap { width: 180px; }
-      .phone-shell { width: 180px; height: 375px; border-radius: 36px; }
+      .floating-video { width: 260px; }
       .phone-fade { display: none; }
     }
     @media (max-width: 520px) {
@@ -569,26 +582,18 @@
 
       </main>
 
-      <!-- Right: iPhone mockup with AI video -->
+      <!-- Right: floating terminal video -->
       <div class="phone-wrap">
         <div class="phone-glow"></div>
-        <div class="phone-shell">
-          <div class="phone-island"></div>
-          <div class="phone-screen">
-            <video
-              src="bankrails-video-test.mp4"
-              autoplay
-              loop
-              muted
-              playsinline
-              preload="auto"
-            ></video>
-            <div class="screen-vignette"></div>
-          </div>
-          <div class="phone-btn-right"></div>
-          <div class="phone-btn-left-1"></div>
-          <div class="phone-btn-left-2"></div>
-        </div>
+        <video
+          class="floating-video"
+          src="bankrails-terminal-final.webm"
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="auto"
+        ></video>
       </div>
 
     </div>
