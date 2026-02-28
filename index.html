@@ -76,7 +76,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px 24px 48px;
+      padding: 20px 48px 48px;
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 56px;
+      width: 100%;
+      max-width: 1100px;
     }
 
     .page {
@@ -84,11 +93,58 @@
       z-index: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      align-items: flex-start;
+      text-align: left;
       gap: 24px;
-      max-width: 580px;
+      max-width: 520px;
+      flex: 1;
+    }
+
+    /* ── Phone frame ── */
+    .phone-wrap {
+      flex-shrink: 0;
+      position: relative;
+      width: 260px;
+      display: flex;
+      align-items: center;
+    }
+
+    .phone-frame {
+      position: relative;
+      width: 260px;
+      border-radius: 36px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 8px #1a0a3a,
+        0 0 0 10px #2d1060,
+        0 30px 80px rgba(124,58,237,0.45),
+        0 0 120px rgba(124,58,237,0.2);
+      background: #0a0014;
+    }
+
+    .phone-frame video {
+      display: block;
       width: 100%;
+      border-radius: 28px;
+    }
+
+    /* Right edge fades into lander bg */
+    .phone-fade {
+      position: absolute;
+      top: 0; right: -1px; bottom: 0;
+      width: 55%;
+      background: linear-gradient(to left, #F5F3FF 0%, transparent 100%);
+      border-radius: 0 28px 28px 0;
+      pointer-events: none;
+    }
+
+    /* Glow behind phone */
+    .phone-glow {
+      position: absolute;
+      inset: -50px -80px;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.2) 0%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
     }
 
     /* ── Wordmark ── */
@@ -131,7 +187,7 @@
     .headline {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: clamp(1.9rem, 8vw, 4.5rem);
+      font-size: clamp(1.9rem, 5vw, 3.8rem);
       line-height: 1.1;
       letter-spacing: -0.03em;
       color: #18181B;
@@ -210,7 +266,7 @@
       line-height: 1.6;
       color: #52525B;
       max-width: 480px;
-      text-align: center;
+      text-align: left;
     }
 
     /* ── Trust pills row ── */
@@ -357,9 +413,19 @@
     }
 
     /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; gap: 32px; align-items: center; }
+      .page { align-items: center; text-align: center; max-width: 100%; }
+      .tagline { text-align: center; }
+      .trust-pills { justify-content: center; }
+      .phone-wrap { width: 220px; }
+      .phone-frame { width: 220px; }
+      .phone-fade { display: none; }
+    }
     @media (max-width: 520px) {
       .nav { padding: 16px 20px; }
       .hero { padding: 0 20px 40px; align-items: flex-start; padding-top: 32px; }
+      .hero-inner { flex-direction: column-reverse; }
       .page { gap: 20px; text-align: left; align-items: flex-start; }
       .wordmark { font-size: 1.1rem; }
       .tagline { font-size: 1rem; text-align: left; }
@@ -396,35 +462,56 @@
 
   <!-- Hero -->
   <div class="hero">
-    <main class="page">
+    <div class="hero-inner">
 
-      <!-- Headline -->
-      <h1 class="headline">Your Agents Are Ready. Your Payments Aren't.</h1>
+      <!-- Left: copy -->
+      <main class="page">
 
-      <!-- Tagline -->
-      <p class="tagline">No wallets. No gas fees. No rug pulls. Just payments that actually work.</p>
+        <!-- Headline -->
+        <h1 class="headline">Your Agents Are Ready. Your Payments Aren't.</h1>
 
-      <!-- Waitlist form (HubSpot) -->
-      <div class="hs-form-wrap">
-        <div class="hs-form-html" data-region="na1"
-          data-form-id="63247df3-fd8f-4fdd-b8cf-991d56bcdab6"
-          data-portal-id="50799094"></div>
+        <!-- Tagline -->
+        <p class="tagline">No wallets. No gas fees. No rug pulls. Just payments that actually work.</p>
+
+        <!-- Waitlist form (HubSpot) -->
+        <div class="hs-form-wrap">
+          <div class="hs-form-html" data-region="na1"
+            data-form-id="63247df3-fd8f-4fdd-b8cf-991d56bcdab6"
+            data-portal-id="50799094"></div>
+        </div>
+
+        <!-- Trust pills -->
+        <div class="trust-pills">
+          <span class="trust-pill"><span class="trust-pill-check">✓</span> Real ACH &amp; wire transfers</span>
+          <span class="trust-pill"><span class="trust-pill-check">✓</span> Full audit trail</span>
+          <span class="trust-pill"><span class="trust-pill-check">✓</span> Reversible payments</span>
+        </div>
+
+        <!-- Trust badge -->
+        <p class="trust">
+          <span aria-hidden="true">🔒</span>
+          Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
+        </p>
+
+      </main>
+
+      <!-- Right: phone mockup with AI video -->
+      <div class="phone-wrap">
+        <div class="phone-glow"></div>
+        <div class="phone-frame">
+          <video
+            src="bankrails-video-test.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="auto"
+          ></video>
+          <div class="phone-fade"></div>
+        </div>
       </div>
 
-      <!-- Trust pills -->
-      <div class="trust-pills">
-        <span class="trust-pill"><span class="trust-pill-check">✓</span> Real ACH &amp; wire transfers</span>
-        <span class="trust-pill"><span class="trust-pill-check">✓</span> Full audit trail</span>
-        <span class="trust-pill"><span class="trust-pill-check">✓</span> Reversible payments</span>
-      </div>
-
-      <!-- Trust badge -->
-      <p class="trust">
-        <span aria-hidden="true">🔒</span>
-        Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
-      </p>
-
-    </main>
+    </div>
   </div>
 
 
