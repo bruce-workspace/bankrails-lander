@@ -104,47 +104,102 @@
     .phone-wrap {
       flex-shrink: 0;
       position: relative;
-      width: 260px;
+      width: 240px;
       display: flex;
       align-items: center;
     }
 
-    .phone-frame {
+    /* Outer shell — iPhone proportions ~9:19.5 */
+    .phone-shell {
       position: relative;
-      width: 260px;
-      border-radius: 32px;
-      overflow: hidden;
-      transform: rotate(-2deg);
+      width: 240px;
+      height: 500px;
+      border-radius: 44px;
+      background: linear-gradient(145deg, #2a1060 0%, #120830 60%, #0a0018 100%);
       box-shadow:
-        0 40px 100px rgba(124,58,237,0.35),
-        0 0 0 1px rgba(124,58,237,0.15);
-      background: #0a0014;
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        0 50px 120px rgba(124,58,237,0.5),
+        0 20px 40px rgba(0,0,0,0.4);
+      transform: rotate(-4deg);
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .phone-frame video {
+    /* Dynamic island */
+    .phone-island {
+      width: 80px;
+      height: 26px;
+      background: #000;
+      border-radius: 20px;
+      margin: 0 auto 8px;
+      flex-shrink: 0;
+    }
+
+    /* Screen area */
+    .phone-screen {
+      flex: 1;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+
+    .phone-screen video {
       display: block;
       width: 100%;
-      border-radius: 31px;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 28px;
     }
 
-    /* Fade right + bottom edges into lander bg */
+    /* Dissolve right + bottom edges into page */
     .phone-fade {
       position: absolute;
       inset: 0;
-      border-radius: 31px;
+      border-radius: 28px;
       background:
-        linear-gradient(to left,  #F5F3FF 0%, transparent 45%),
-        linear-gradient(to bottom,#F5F3FF 0%, transparent 25%);
+        linear-gradient(to left,  #F5F3FF 0%, transparent 50%),
+        linear-gradient(to bottom, rgba(245,243,255,0.6) 0%, transparent 30%);
       pointer-events: none;
     }
 
-    /* Big ambient glow — bleeds into lander */
+    /* Ambient glow — large, soft */
     .phone-glow {
       position: absolute;
-      inset: -80px -120px;
-      background: radial-gradient(ellipse at 60% 50%, rgba(124,58,237,0.28) 0%, rgba(124,58,237,0.08) 45%, transparent 70%);
+      inset: -100px -140px;
+      background: radial-gradient(ellipse at 55% 50%, rgba(124,58,237,0.3) 0%, rgba(124,58,237,0.1) 40%, transparent 70%);
       z-index: -1;
       pointer-events: none;
+    }
+
+    /* Side buttons */
+    .phone-btn-right {
+      position: absolute;
+      right: -3px;
+      top: 120px;
+      width: 3px;
+      height: 60px;
+      background: #1a0a3a;
+      border-radius: 0 2px 2px 0;
+    }
+    .phone-btn-left-1 {
+      position: absolute;
+      left: -3px;
+      top: 100px;
+      width: 3px;
+      height: 30px;
+      background: #1a0a3a;
+      border-radius: 2px 0 0 2px;
+    }
+    .phone-btn-left-2 {
+      position: absolute;
+      left: -3px;
+      top: 145px;
+      width: 3px;
+      height: 50px;
+      background: #1a0a3a;
+      border-radius: 2px 0 0 2px;
     }
 
     /* ── Wordmark ── */
@@ -414,18 +469,19 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      .hero-inner { flex-direction: column; gap: 32px; align-items: center; }
+      .hero-inner { flex-direction: column; gap: 40px; align-items: center; }
       .page { align-items: center; text-align: center; max-width: 100%; }
       .tagline { text-align: center; }
       .trust-pills { justify-content: center; }
-      .phone-wrap { width: 220px; }
-      .phone-frame { width: 220px; }
+      .phone-wrap { width: 180px; }
+      .phone-shell { width: 180px; height: 375px; border-radius: 36px; }
       .phone-fade { display: none; }
     }
     @media (max-width: 520px) {
       .nav { padding: 16px 20px; }
       .hero { padding: 0 20px 40px; align-items: flex-start; padding-top: 32px; }
-      .hero-inner { flex-direction: column-reverse; }
+      .hero-inner { flex-direction: column; }
+      .phone-wrap { display: none; }
       .page { gap: 20px; text-align: left; align-items: flex-start; }
       .wordmark { font-size: 1.1rem; }
       .tagline { font-size: 1rem; text-align: left; }
@@ -495,19 +551,25 @@
 
       </main>
 
-      <!-- Right: phone mockup with AI video -->
+      <!-- Right: iPhone mockup with AI video -->
       <div class="phone-wrap">
         <div class="phone-glow"></div>
-        <div class="phone-frame">
-          <video
-            src="bankrails-video-test.mp4"
-            autoplay
-            loop
-            muted
-            playsinline
-            preload="auto"
-          ></video>
-          <div class="phone-fade"></div>
+        <div class="phone-shell">
+          <div class="phone-island"></div>
+          <div class="phone-screen">
+            <video
+              src="bankrails-video-test.mp4"
+              autoplay
+              loop
+              muted
+              playsinline
+              preload="auto"
+            ></video>
+            <div class="phone-fade"></div>
+          </div>
+          <div class="phone-btn-right"></div>
+          <div class="phone-btn-left-1"></div>
+          <div class="phone-btn-left-2"></div>
         </div>
       </div>
 
