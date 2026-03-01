@@ -20,6 +20,7 @@
     .terminal {
       width: 100%;
       max-width: 860px;
+      overflow: hidden;
       background: #0E0E0E;
       border-radius: 12px;
       overflow: hidden;
@@ -54,9 +55,10 @@
       font-size: 14px;
       line-height: 1.7;
       min-height: 380px;
+      overflow-x: hidden;
     }
     
-    .line { display: block; white-space: pre-wrap; word-break: break-word; }
+    .line { display: block; white-space: pre-wrap; word-break: break-all; overflow-wrap: break-word; max-width: 100%; }
     .line-empty { display: block; height: 1.7em; }
     
     .prompt { color: #7C3AED; }
@@ -80,8 +82,9 @@
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
     @media (max-width: 640px) {
-      body { padding: 20px; }
-      .terminal-body { padding: 20px; font-size: 12px; min-height: 300px; }
+      body { padding: 16px; }
+      .terminal { max-width: 100%; }
+      .terminal-body { padding: 16px 18px 24px; font-size: 11.5px; min-height: 260px; overflow-x: hidden; }
       .terminal-bar { padding: 10px 14px; }
       .dot { width: 10px; height: 10px; }
     }
