@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BankRails — Payment Infrastructure for AI Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    
+    /* ── Nav ── */
+    nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 40px;
+      z-index: 100;
+    }
+    
+    .logo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+    
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: #7C3AED;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      position: relative;
+    }
+    
+    .logo-mark::before,
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background: white;
+      left: 8px;
+    }
+    
+    .logo-mark::before { top: 20px; }
+    .logo-mark::after { top: 26px; }
+    
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+    
+    /* ── Main Terminal Container ── */
+    .terminal-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 40px 60px;
+      position: relative;
+    }
+    
+    .terminal-iframe-wrap {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+    }
+    
+    .terminal-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    
+    /* ── Form Section ── */
+    .form-section {
+      padding: 40px 40px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      background: linear-gradient(to bottom, transparent, rgba(124, 58, 237, 0.05));
+    }
+    
+    .form-wrap {
+      width: 100%;
+      max-width: 500px;
+    }
+    
+    .hs-form-wrap {
+      width: 100%;
+    }
+    
+    .trust {
+      font-size: 14px;
+      color: #A1A1AA;
+      text-align: center;
+    }
+    
+    .trust a {
+      color: #7C3AED;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .trust a:hover {
+      color: #A78BFA;
+    }
+    
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .logo-text { font-size: 18px; }
+      .logo-mark { width: 36px; height: 36px; font-size: 16px; }
+      .terminal-container { padding: 100px 24px 40px; }
+      .form-section { padding: 32px 24px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="logo-link">
+      <div class="logo-mark">br</div>
+      <span class="logo-text">bankrails</span>
+    </a>
+  </nav>
+
+  <div class="terminal-container">
+    <div class="terminal-iframe-wrap">
+      <iframe src="https://6933afa4-d4b1-43f3-9daa-13db3bd4ff6a-00-145mcaipx1il.janeway.replit.dev/" 
+              allow="autoplay" 
+              loading="lazy"
+              title="BankRails Terminal Demo"></iframe>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-wrap">
+      <div class="hs-form-wrap">
+        <div class="hs-form-html" 
+             data-region="na1"
+             data-form-id="63247df3-fd8f-4fdd-b8cf-991d56bcdab6"
+             data-portal-id="50799094"></div>
+      </div>
+    </div>
+    
+    <p class="trust">
+      <span aria-hidden="true">🔒</span> Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
+    </p>
+  </div>
+
+  <script charset="utf-8" type="text/javascript" src="//js-na1.hsforms.net/forms/embed/v2.js"></script>
+  <script>
+    hbspt.forms.create({
+      region: "na1",
+      portalId: "50799094",
+      formId: "63247df3-fd8f-4fdd-b8cf-991d56bcdab6",
+      target: ".hs-form-html"
+    });
+  </script>
+
+</body>
+</html>
