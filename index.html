@@ -537,6 +537,26 @@
         justify-content: center !important;
       }
     }
+
+    /* Flush HubSpot form inputs to left edge */
+    .hs-form-wrap input[type="email"],
+    .hs-form-wrap input[type="text"],
+    .hsfc-ExtraSmall input,
+    .hsfc-form input {
+      padding-left: 12px !important;
+    }
+    .hs-form-wrap .hs-form-field,
+    .hsfc-ExtraSmall .hs-form-field,
+    .hsfc-form .hs-form-field {
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+    }
+    .hs-form-wrap form,
+    .hsfc-ExtraSmall form,
+    .hsfc-form {
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+    }
   </style>
 </head>
 <body>
@@ -607,6 +627,12 @@
     function styleHsForm() {
       const content = document.querySelector('.hs-form-wrap .hsfc-Step__Content');
       if (!content) return false;
+
+      // Flush form to left edge
+      const formWrap = document.querySelector('.hs-form-wrap');
+      const formEl = document.querySelector('.hs-form-wrap form, .hs-form-wrap .hsfc-ExtraSmall');
+      if (formEl) { formEl.style.setProperty('padding-left', '0', 'important'); formEl.style.setProperty('margin-left', '0', 'important'); }
+      if (formWrap) { formWrap.style.setProperty('padding-left', '0', 'important'); formWrap.style.setProperty('margin-left', '0', 'important'); }
 
       const isMobile = window.innerWidth <= 520;
 
