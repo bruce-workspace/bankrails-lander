@@ -201,6 +201,53 @@
     }
     .waitlist-form button:hover { background: #6D28D9; }
     .waitlist-form button:disabled { background: #A78BFA; cursor: default; }
+
+    .hero-text {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 20px;
+    }
+    
+    .trust-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1.5px solid rgba(124,58,237,0.2);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #3F3F46;
+      background: white;
+    }
+    
+    .trust-pill .check { color: #7C3AED; font-weight: 700; }
+    
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: #18181B;
+    }
+    
+    .headline-2 {
+      color: #7C3AED;
+      display: block;
+    }
+    
+    @media (max-width: 768px) {
+      .headline { font-size: 36px; }
+      .terminal-section { padding-top: 80px; }
+    }
   </style>
 </head>
 <body>
@@ -208,12 +255,21 @@
   <div class="wordmark">bankrails</div>
 
   <div class="terminal-section">
+    <div class="hero-text">
+      <div class="trust-pills">
+        <span class="trust-pill"><span class="check">✓</span> Real ACH &amp; wire transfers</span>
+        <span class="trust-pill"><span class="check">✓</span> Full audit trail</span>
+        <span class="trust-pill"><span class="check">✓</span> Reversible payments</span>
+      </div>
+      <h1 class="headline">Your Agents Are Ready.<br><span class="headline-2">Your Payments Aren't.</span></h1>
+    </div>
     <div class="terminal-iframe-wrap">
       <iframe src="https://6933afa4-d4b1-43f3-9daa-13db3bd4ff6a-00-145mcaipx1il.janeway.replit.dev/" 
               allow="autoplay" 
               loading="lazy"
               title="BankRails Terminal Demo"></iframe>
     </div>
+  </div>
   </div>
 
   <div class="form-section">
