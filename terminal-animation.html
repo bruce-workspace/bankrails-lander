@@ -56,7 +56,7 @@
       min-height: 380px;
     }
     
-    .line { display: block; white-space: pre; }
+    .line { display: block; white-space: pre-wrap; word-break: break-word; }
     .line-empty { display: block; height: 1.7em; }
     
     .prompt { color: #7C3AED; }
@@ -78,6 +78,13 @@
     }
     
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    @media (max-width: 640px) {
+      body { padding: 20px; }
+      .terminal-body { padding: 20px; font-size: 12px; min-height: 300px; }
+      .terminal-bar { padding: 10px 14px; }
+      .dot { width: 10px; height: 10px; }
+    }
   </style>
 </head>
 <body>
