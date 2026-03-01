@@ -87,7 +87,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px 80px 48px 48px;
+      padding: 20px 48px 48px;
       overflow: hidden;
     }
 
@@ -509,7 +509,7 @@
       .trust-pills { justify-content: center; }
       .trust { align-self: center; }
       .phone-wrap { width: 280px !important; overflow: visible; }
-      .floating-video { width: 100% !important; height: auto !important; margin: 0 !important; }
+      .floating-video { width: 100% !important; max-width: 300px !important; height: auto !important; margin: 0 !important; }
     }
     @media (max-width: 520px) {
       .nav { padding: 16px 20px; }
@@ -586,7 +586,8 @@
         <div class="phone-glow"></div>
         <video
           class="floating-video"
-          src="bankrails-terminal-final.webm"
+          style="height:420px!important;width:auto!important;margin:0!important;"
+          src="bankrails-terminal-v4.webm"
           autoplay
           loop
           muted
