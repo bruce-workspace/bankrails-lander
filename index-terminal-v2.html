@@ -31,7 +31,26 @@
       letter-spacing: -0.5px;
       color: #7C3AED;
       z-index: 100;
+      display: flex;
+      flex-direction: column;
     }
+    .rail-lines {
+      display: block;
+      width: 100%;
+      height: 8px;
+      margin-top: 4px;
+      position: relative;
+    }
+    .rail-lines::before,
+    .rail-lines::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 1.5px;
+      background: rgba(124, 58, 237, 0.55);
+    }
+    .rail-lines::before { top: 0; }
+    .rail-lines::after  { top: 5px; }
     
     /* ── Terminal Container ── */
     .terminal-section {
@@ -322,10 +341,10 @@
 </head>
 <body>
 
-  <div class="wordmark">bankrails</div>
+  <div class="wordmark"><span class="wm-text">bankrails</span><span class="rail-lines" aria-hidden="true"></span></div>
 
   <div class="terminal-section">
-    <div class="hero-text">
+    <div class="hero-text" style="text-align:center;align-items:center;">
       <div class="trust-pills">
         <span class="trust-pill"><span class="check">✓</span> Real ACH &amp; wire transfers</span>
         <span class="trust-pill"><span class="check">✓</span> Full audit trail</span>
