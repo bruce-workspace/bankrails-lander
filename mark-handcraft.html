@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #F0EEFF;
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 60px 40px;
+  }
+  .page { display: flex; flex-direction: column; gap: 56px; max-width: 900px; width: 100%; }
+  .section { display: flex; flex-direction: column; gap: 20px; }
+  .section-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7C3AED;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(124,58,237,0.15);
+  }
+  .marks { display: flex; align-items: flex-start; gap: 48px; flex-wrap: wrap; }
+  .mark-item { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .mark-label { font-size: 10px; color: #71717A; font-weight: 500; text-align: center; }
+
+  /* Size previews */
+  .sizes { display: flex; gap: 10px; align-items: center; }
+
+  /* White circle container */
+  .circle-lg { width: 120px; height: 120px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(124,58,237,0.12); }
+  .circle-md { width: 48px; height: 48px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(124,58,237,0.1); }
+  .circle-sm { width: 28px; height: 28px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 6px rgba(124,58,237,0.1); }
+
+  /* Purple square container */
+  .sq-md { width: 48px; height: 48px; border-radius: 10px; background: #7C3AED; display: flex; align-items: center; justify-content: center; }
+  .sq-sm { width: 28px; height: 28px; border-radius: 6px; background: #7C3AED; display: flex; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- MARK 1: Sharp Z-Rail -->
+  <div class="section">
+    <div class="section-title">Mark 1 — Sharp Z-Rail · Filled polygon, hard edges</div>
+    <div class="marks">
+      <!-- Purple on white -->
+      <div class="mark-item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="76" height="76" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 12,18 L 80,18 L 80,34 L 39,66 L 88,66 L 88,82 L 20,82 L 20,66 L 61,34 L 12,34 Z" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div class="circle-md">
+            <svg viewBox="0 0 100 100" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12,18 L 80,18 L 80,34 L 39,66 L 88,66 L 88,82 L 20,82 L 20,66 L 61,34 L 12,34 Z" fill="#7C3AED"/>
+            </svg>
+          </div>
+          <div class="circle-sm">
+            <svg viewBox="0 0 100 100" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12,18 L 80,18 L 80,34 L 39,66 L 88,66 L 88,82 L 20,82 L 20,66 L 61,34 L 12,34 Z" fill="#7C3AED"/>
+            </svg>
+          </div>
+          <div class="sq-md">
+            <svg viewBox="0 0 100 100" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12,18 L 80,18 L 80,34 L 39,66 L 88,66 L 88,82 L 20,82 L 20,66 L 61,34 L 12,34 Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="sq-sm">
+            <svg viewBox="0 0 100 100" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12,18 L 80,18 L 80,34 L 39,66 L 88,66 L 88,82 L 20,82 L 20,66 L 61,34 L 12,34 Z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mark-label">Purple on white</div>
+      </div>
+
+      <!-- White on purple square -->
+      <div class="mark-item">
+        <div style="width:120px;height:120px;border-radius:24px;background:#7C3AED;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(124,58,237,0.3);">
+          <svg viewBox="0 0 100 100" width="76" height="76" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 12,18 L 80,18 L 80,34 L 39,66 L 88,66 L 88,82 L 20,82 L 20,66 L 61,34 L 12,34 Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div style="width:48px;height:48px;border-radius:10px;background:#7C3AED;display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 100 100" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12,18 L 80,18 L 80,34 L 39,66 L 88,66 L 88,82 L 20,82 L 20,66 L 61,34 L 12,34 Z" fill="white"/>
+            </svg>
+          </div>
+          <div style="width:28px;height:28px;border-radius:6px;background:#7C3AED;display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 100 100" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12,18 L 80,18 L 80,34 L 39,66 L 88,66 L 88,82 L 20,82 L 20,66 L 61,34 L 12,34 Z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mark-label">White on purple</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARK 2: Rounded Z-Rail -->
+  <div class="section">
+    <div class="section-title">Mark 2 — Rounded Z-Rail · Stroked path, soft edges</div>
+    <div class="marks">
+      <div class="mark-item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 16,26 L 72,26 L 28,74 L 84,74"
+                  stroke="#7C3AED" stroke-width="17"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  fill="none"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div class="circle-md">
+            <svg viewBox="0 0 100 100" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 16,26 L 72,26 L 28,74 L 84,74"
+                    stroke="#7C3AED" stroke-width="17"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    fill="none"/>
+            </svg>
+          </div>
+          <div class="circle-sm">
+            <svg viewBox="0 0 100 100" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 16,26 L 72,26 L 28,74 L 84,74"
+                    stroke="#7C3AED" stroke-width="17"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    fill="none"/>
+            </svg>
+          </div>
+          <div class="sq-md">
+            <svg viewBox="0 0 100 100" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 16,26 L 72,26 L 28,74 L 84,74"
+                    stroke="white" stroke-width="17"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    fill="none"/>
+            </svg>
+          </div>
+          <div class="sq-sm">
+            <svg viewBox="0 0 100 100" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 16,26 L 72,26 L 28,74 L 84,74"
+                    stroke="white" stroke-width="17"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    fill="none"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mark-label">Purple on white + white on purple</div>
+      </div>
+
+      <div class="mark-item">
+        <div style="width:120px;height:120px;border-radius:24px;background:#7C3AED;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(124,58,237,0.3);">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 16,26 L 72,26 L 28,74 L 84,74"
+                  stroke="white" stroke-width="17"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  fill="none"/>
+          </svg>
+        </div>
+        <div class="mark-label">Square badge</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARK 3: Bolt + Rail Notch — lightning bolt with rail extensions -->
+  <div class="section">
+    <div class="section-title">Mark 3 — Bolt + Rail · Lightning bolt with horizontal rail extensions</div>
+    <div class="marks">
+      <div class="mark-item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+            <!--
+              Lightning bolt where the top-left edge and bottom-right edge
+              extend horizontally as rail lines. The bolt and rails are one unified shape.
+              Upper-left rail + diagonal top + notch + diagonal bottom + lower-right rail
+            -->
+            <path d="
+              M 8,22
+              L 58,22
+              L 42,46
+              L 56,46
+              L 22,78
+              L 38,54
+              L 24,54
+              Z
+            " fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="mark-label">Standard bolt</div>
+      </div>
+
+      <!-- Refined: bolt with horizontal rail extensions -->
+      <div class="mark-item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+            <!--
+              The bolt shape where:
+              - Upper horizontal edge extends left as a rail
+              - Lower horizontal edge extends right as a rail
+              Creating a unified bolt+rail mark
+            -->
+            <path d="
+              M 10,20
+              L 70,20
+              L 52,44
+              L 68,44
+              L 30,80
+              L 48,56
+              L 32,56
+              Z
+            " fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="mark-label">Rail-extended bolt</div>
+      </div>
+
+      <!-- Stroked bolt variant -->
+      <div class="mark-item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 14,22 L 60,22 L 40,50 L 58,50 L 28,80"
+                  stroke="#7C3AED" stroke-width="13"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  fill="none"/>
+          </svg>
+        </div>
+        <div class="mark-label">Rounded stroke bolt</div>
+      </div>
+
+      <div class="mark-item">
+        <div style="width:120px;height:120px;border-radius:24px;background:#7C3AED;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(124,58,237,0.3);">
+          <svg viewBox="0 0 100 100" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 14,22 L 60,22 L 40,50 L 58,50 L 28,80"
+                  stroke="white" stroke-width="13"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  fill="none"/>
+          </svg>
+        </div>
+        <div class="mark-label">Rounded stroke — dark</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

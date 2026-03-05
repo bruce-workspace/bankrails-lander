@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #F0EEFF; font-family: Inter, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 60px 40px; }
+  .page { display: flex; flex-direction: column; gap: 56px; max-width: 900px; width: 100%; }
+  .row-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7C3AED; border-bottom: 1px solid rgba(124,58,237,0.15); padding-bottom: 10px; margin-bottom: 24px; }
+  .row { display: flex; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .sz-label { font-size: 9px; color: #a0a0b0; font-weight: 500; letter-spacing: 0.05em; }
+  .sizes { display: flex; gap: 10px; align-items: center; }
+
+  .circle-lg { width: 120px; height: 120px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(124,58,237,0.13); overflow: hidden; }
+  .sq-lg    { width: 120px; height: 120px; border-radius: 22px; background: #7C3AED; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(124,58,237,0.3); overflow: hidden; }
+  .circle-md { width: 56px; height: 56px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(124,58,237,0.1); overflow: hidden; }
+  .sq-md    { width: 56px; height: 56px; border-radius: 11px; background: #7C3AED; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .circle-sm { width: 32px; height: 32px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 6px rgba(124,58,237,0.1); overflow: hidden; }
+  .sq-sm    { width: 32px; height: 32px; border-radius: 7px; background: #7C3AED; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- MARK B: Uppercase BR, tight kern, BIG — fills the circle -->
+  <div>
+    <div class="row-label">B — Uppercase BR · fills circle · tight kern</div>
+    <div class="row">
+      <div class="item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="48" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="52"
+              letter-spacing="-3" fill="#7C3AED">BR</text>
+            <rect x="18" y="68" width="64" height="4.5" rx="2.25" fill="#7C3AED"/>
+            <rect x="18" y="75.5" width="64" height="4.5" rx="2.25" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div class="circle-md">
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
+              <text x="50" y="48" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="52" letter-spacing="-3" fill="#7C3AED">BR</text>
+              <rect x="18" y="68" width="64" height="4.5" rx="2.25" fill="#7C3AED"/>
+              <rect x="18" y="75.5" width="64" height="4.5" rx="2.25" fill="#7C3AED"/>
+            </svg>
+          </div>
+          <div class="circle-sm">
+            <svg viewBox="0 0 100 100" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+              <text x="50" y="48" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="52" letter-spacing="-3" fill="#7C3AED">BR</text>
+              <rect x="18" y="68" width="64" height="4.5" rx="2.25" fill="#7C3AED"/>
+              <rect x="18" y="75.5" width="64" height="4.5" rx="2.25" fill="#7C3AED"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sz-label">Purple on white</div>
+      </div>
+
+      <div class="item">
+        <div class="sq-lg">
+          <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="48" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="52"
+              letter-spacing="-3" fill="white">BR</text>
+            <rect x="18" y="68" width="64" height="4.5" rx="2.25" fill="white"/>
+            <rect x="18" y="75.5" width="64" height="4.5" rx="2.25" fill="white"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div class="sq-md">
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
+              <text x="50" y="48" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="52" letter-spacing="-3" fill="white">BR</text>
+              <rect x="18" y="68" width="64" height="4.5" rx="2.25" fill="white"/>
+              <rect x="18" y="75.5" width="64" height="4.5" rx="2.25" fill="white"/>
+            </svg>
+          </div>
+          <div class="sq-sm">
+            <svg viewBox="0 0 100 100" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+              <text x="50" y="48" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="52" letter-spacing="-3" fill="white">BR</text>
+              <rect x="18" y="68" width="64" height="4.5" rx="2.25" fill="white"/>
+              <rect x="18" y="75.5" width="64" height="4.5" rx="2.25" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sz-label">White on purple</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARK C: Lowercase br, BIG — fills the circle -->
+  <div>
+    <div class="row-label">C — Lowercase br · fills circle · contemporary</div>
+    <div class="row">
+      <div class="item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="46" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56"
+              letter-spacing="-3" fill="#7C3AED">br</text>
+            <rect x="16" y="68" width="68" height="4.5" rx="2.25" fill="#7C3AED"/>
+            <rect x="16" y="75.5" width="68" height="4.5" rx="2.25" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div class="circle-md">
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
+              <text x="50" y="46" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56" letter-spacing="-3" fill="#7C3AED">br</text>
+              <rect x="16" y="68" width="68" height="4.5" rx="2.25" fill="#7C3AED"/>
+              <rect x="16" y="75.5" width="68" height="4.5" rx="2.25" fill="#7C3AED"/>
+            </svg>
+          </div>
+          <div class="circle-sm">
+            <svg viewBox="0 0 100 100" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+              <text x="50" y="46" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56" letter-spacing="-3" fill="#7C3AED">br</text>
+              <rect x="16" y="68" width="68" height="4.5" rx="2.25" fill="#7C3AED"/>
+              <rect x="16" y="75.5" width="68" height="4.5" rx="2.25" fill="#7C3AED"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sz-label">Purple on white</div>
+      </div>
+
+      <div class="item">
+        <div class="sq-lg">
+          <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="46" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56"
+              letter-spacing="-3" fill="white">br</text>
+            <rect x="16" y="68" width="68" height="4.5" rx="2.25" fill="white"/>
+            <rect x="16" y="75.5" width="68" height="4.5" rx="2.25" fill="white"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div class="sq-md">
+            <svg viewBox="0 0 100 100" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
+              <text x="50" y="46" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56" letter-spacing="-3" fill="white">br</text>
+              <rect x="16" y="68" width="68" height="4.5" rx="2.25" fill="white"/>
+              <rect x="16" y="75.5" width="68" height="4.5" rx="2.25" fill="white"/>
+            </svg>
+          </div>
+          <div class="sq-sm">
+            <svg viewBox="0 0 100 100" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+              <text x="50" y="46" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="56" letter-spacing="-3" fill="white">br</text>
+              <rect x="16" y="68" width="68" height="4.5" rx="2.25" fill="white"/>
+              <rect x="16" y="75.5" width="68" height="4.5" rx="2.25" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sz-label">White on purple</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

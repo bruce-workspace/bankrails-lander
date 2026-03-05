@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #F0EEFF; font-family: Inter, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 60px 40px; }
+  .page { display: flex; flex-direction: column; gap: 48px; max-width: 960px; width: 100%; }
+  .row-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7C3AED; border-bottom: 1px solid rgba(124,58,237,0.15); padding-bottom: 10px; margin-bottom: 20px; }
+  .row { display: flex; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .sz-label { font-size: 9px; color: #a0a0b0; font-weight: 500; }
+
+  /* Containers */
+  .circle-lg { width: 120px; height: 120px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(124,58,237,0.13); }
+  .sq-lg { width: 120px; height: 120px; border-radius: 22px; background: #7C3AED; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(124,58,237,0.3); }
+  .circle-sm { width: 48px; height: 48px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(124,58,237,0.1); }
+  .sq-sm { width: 48px; height: 48px; border-radius: 9px; background: #7C3AED; display: flex; align-items: center; justify-content: center; }
+  .tiny-c { width: 28px; height: 28px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 6px rgba(124,58,237,0.1); }
+  .tiny-sq { width: 28px; height: 28px; border-radius: 5px; background: #7C3AED; display: flex; align-items: center; justify-content: center; }
+
+  .sizes { display: flex; gap: 8px; align-items: center; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- MARK A: Space Grotesk Bold, two rails, standard weight -->
+  <div>
+    <div class="row-label">A — Space Grotesk 700 · rails beneath</div>
+    <div class="row">
+      <div class="item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="52" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="36"
+              letter-spacing="-1" fill="#7C3AED">BR</text>
+            <rect x="24" y="64" width="52" height="3.5" rx="1.75" fill="#7C3AED"/>
+            <rect x="24" y="70.5" width="52" height="3.5" rx="1.75" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div class="circle-sm"><svg viewBox="0 0 100 100" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><text x="50" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="36" letter-spacing="-1" fill="#7C3AED">BR</text><rect x="24" y="64" width="52" height="3.5" rx="1.75" fill="#7C3AED"/><rect x="24" y="70.5" width="52" height="3.5" rx="1.75" fill="#7C3AED"/></svg></div>
+          <div class="tiny-c"><svg viewBox="0 0 100 100" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><text x="50" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="36" letter-spacing="-1" fill="#7C3AED">BR</text><rect x="24" y="64" width="52" height="3.5" rx="1.75" fill="#7C3AED"/><rect x="24" y="70.5" width="52" height="3.5" rx="1.75" fill="#7C3AED"/></svg></div>
+        </div>
+        <div class="sz-label">Purple on white</div>
+      </div>
+      <div class="item">
+        <div class="sq-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="52" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="36"
+              letter-spacing="-1" fill="white">BR</text>
+            <rect x="24" y="64" width="52" height="3.5" rx="1.75" fill="white"/>
+            <rect x="24" y="70.5" width="52" height="3.5" rx="1.75" fill="white"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <div class="sq-sm"><svg viewBox="0 0 100 100" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><text x="50" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="36" letter-spacing="-1" fill="white">BR</text><rect x="24" y="64" width="52" height="3.5" rx="1.75" fill="white"/><rect x="24" y="70.5" width="52" height="3.5" rx="1.75" fill="white"/></svg></div>
+          <div class="tiny-sq"><svg viewBox="0 0 100 100" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><text x="50" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="36" letter-spacing="-1" fill="white">BR</text><rect x="24" y="64" width="52" height="3.5" rx="1.75" fill="white"/><rect x="24" y="70.5" width="52" height="3.5" rx="1.75" fill="white"/></svg></div>
+        </div>
+        <div class="sz-label">White on purple</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARK B: Tighter kerning, rails same width as letters (not full width) -->
+  <div>
+    <div class="row-label">B — Tight kern · rails match letter width</div>
+    <div class="row">
+      <div class="item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="51" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="38"
+              letter-spacing="-3" fill="#7C3AED">BR</text>
+            <rect x="28" y="65" width="44" height="3" rx="1.5" fill="#7C3AED"/>
+            <rect x="28" y="71" width="44" height="3" rx="1.5" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="sz-label">Purple on white</div>
+      </div>
+      <div class="item">
+        <div class="sq-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="51" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="38"
+              letter-spacing="-3" fill="white">BR</text>
+            <rect x="28" y="65" width="44" height="3" rx="1.5" fill="white"/>
+            <rect x="28" y="71" width="44" height="3" rx="1.5" fill="white"/>
+          </svg>
+        </div>
+        <div class="sz-label">White on purple</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARK C: Lowercase br, more contemporary -->
+  <div>
+    <div class="row-label">C — Lowercase "br" · contemporary / startup feel</div>
+    <div class="row">
+      <div class="item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="50" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="42"
+              letter-spacing="-2" fill="#7C3AED">br</text>
+            <rect x="26" y="65" width="48" height="3.5" rx="1.75" fill="#7C3AED"/>
+            <rect x="26" y="71.5" width="48" height="3.5" rx="1.75" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="sz-label">Purple on white</div>
+      </div>
+      <div class="item">
+        <div class="sq-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <text x="50" y="50" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="42"
+              letter-spacing="-2" fill="white">br</text>
+            <rect x="26" y="65" width="48" height="3.5" rx="1.75" fill="white"/>
+            <rect x="26" y="71.5" width="48" height="3.5" rx="1.75" fill="white"/>
+          </svg>
+        </div>
+        <div class="sz-label">White on purple</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARK D: Rails above AND below — symmetric, more distinctive -->
+  <div>
+    <div class="row-label">D — Rails above + below · symmetric tracks</div>
+    <div class="row">
+      <div class="item">
+        <div class="circle-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <rect x="22" y="22" width="56" height="3.5" rx="1.75" fill="#7C3AED"/>
+            <rect x="22" y="28.5" width="56" height="3.5" rx="1.75" fill="#7C3AED"/>
+            <text x="50" y="55" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="34"
+              letter-spacing="-1" fill="#7C3AED">BR</text>
+            <rect x="22" y="68" width="56" height="3.5" rx="1.75" fill="#7C3AED"/>
+            <rect x="22" y="74.5" width="56" height="3.5" rx="1.75" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="sz-label">Purple on white</div>
+      </div>
+      <div class="item">
+        <div class="sq-lg">
+          <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <rect x="22" y="22" width="56" height="3.5" rx="1.75" fill="white"/>
+            <rect x="22" y="28.5" width="56" height="3.5" rx="1.75" fill="white"/>
+            <text x="50" y="55" text-anchor="middle" dominant-baseline="middle"
+              font-family="Space Grotesk, sans-serif" font-weight="700" font-size="34"
+              letter-spacing="-1" fill="white">BR</text>
+            <rect x="22" y="68" width="56" height="3.5" rx="1.75" fill="white"/>
+            <rect x="22" y="74.5" width="56" height="3.5" rx="1.75" fill="white"/>
+          </svg>
+        </div>
+        <div class="sz-label">White on purple</div>
+      </div>
+      <div class="item">
+        <div class="circle-sm"><svg viewBox="0 0 100 100" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="22" width="56" height="3.5" rx="1.75" fill="#7C3AED"/><rect x="22" y="28.5" width="56" height="3.5" rx="1.75" fill="#7C3AED"/><text x="50" y="55" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="34" letter-spacing="-1" fill="#7C3AED">BR</text><rect x="22" y="68" width="56" height="3.5" rx="1.75" fill="#7C3AED"/><rect x="22" y="74.5" width="56" height="3.5" rx="1.75" fill="#7C3AED"/></svg></div>
+        <div class="tiny-c"><svg viewBox="0 0 100 100" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="22" width="56" height="3.5" rx="1.75" fill="#7C3AED"/><rect x="22" y="28.5" width="56" height="3.5" rx="1.75" fill="#7C3AED"/><text x="50" y="55" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="34" letter-spacing="-1" fill="#7C3AED">BR</text><rect x="22" y="68" width="56" height="3.5" rx="1.75" fill="#7C3AED"/><rect x="22" y="74.5" width="56" height="3.5" rx="1.75" fill="#7C3AED"/></svg></div>
+        <div class="sz-label">Small sizes</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

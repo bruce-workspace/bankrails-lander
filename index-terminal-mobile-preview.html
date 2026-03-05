@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BankRails — Payment Infrastructure for AI Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #F5F3FF;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* ── Wordmark Top Left ── */
+    .wordmark {
+      position: absolute;
+      top: 24px;
+      left: 40px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: -0.5px;
+      color: #18181B;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+    .wm-text { color: #18181B; }
+    .rail-lines {
+      display: block;
+      width: 100%;
+      height: 8px;
+      margin-top: 4px;
+      position: relative;
+    }
+    .rail-lines::before,
+    .rail-lines::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 1.5px;
+      background: rgba(124, 58, 237, 0.55);
+    }
+    .rail-lines::before { top: 0; }
+    .rail-lines::after  { top: 5px; }
+    
+    /* ── Terminal Container ── */
+    .terminal-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 40px 40px;
+      gap: 32px;
+    }
+    
+    .terminal-iframe-wrap {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
+    }
+    
+    .terminal-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    
+    /* ── Form Section ── */
+    .form-section {
+      padding: 40px 40px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .form-wrap {
+      width: 100%;
+      max-width: 500px;
+    }
+    
+    .hs-form-wrap {
+      width: 100%;
+    }
+    
+    .trust {
+      font-size: 14px;
+      color: #71717A;
+      text-align: center;
+    }
+    
+    .trust a {
+      color: #7C3AED;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .trust a:hover {
+      color: #6D28D9;
+    }
+    
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .terminal-embed-wrap {
+        max-height: 260px;
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      }
+      .wordmark { 
+        top: 20px; 
+        left: 24px; 
+        font-size: 20px;
+      }
+      
+      .terminal-section { 
+        padding: 80px 24px 32px; 
+      }
+      
+      .form-section { 
+        padding: 32px 24px 40px; 
+      }
+    }
+
+    /* Tighten space below terminal */
+    .terminal-section {
+      padding-bottom: 20px !important;
+    }
+    
+    /* Force HubSpot form inline */
+    .hs-form-wrap form,
+    .hs-form-wrap .hs-form,
+    .hsfc-ExtraSmall {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: stretch !important;
+      gap: 0 !important;
+      width: 100% !important;
+    }
+    
+    .hs-form-wrap .hs-form-field,
+    .hsfc-ExtraSmall .hs-form-field,
+    .hsfc-Row {
+      flex: 1 !important;
+      margin: 0 !important;
+    }
+    
+    .hs-form-wrap label,
+    .hsfc-FieldLabel {
+      display: none !important;
+    }
+    
+    .hs-form-wrap input[type="email"],
+    .hsfc-TextInput {
+      border-right: none !important;
+      border-radius: 10px 0 0 10px !important;
+      height: 48px !important;
+    }
+    
+    .hs-form-wrap .hs-submit,
+    .hsfc-NavigationRow {
+      flex-shrink: 0 !important;
+      margin: 0 !important;
+    }
+    
+    .hs-form-wrap .hs-button,
+    .hsfc-Button {
+      border-radius: 0 10px 10px 0 !important;
+      height: 48px !important;
+      white-space: nowrap !important;
+    }
+    
+    /* Remove excess padding in form section */
+    .form-section {
+      padding-top: 20px !important;
+      padding-bottom: 40px !important;
+    }
+
+    .waitlist-form {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      width: 100%;
+      max-width: 460px;
+    }
+    .waitlist-form input[type="email"] {
+      flex: 1;
+      height: 50px;
+      padding: 0 16px;
+      font-size: 15px;
+      font-family: inherit;
+      border: 1.5px solid rgba(124,58,237,0.25);
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      outline: none;
+      background: white;
+      color: #1a1a1a;
+      transition: border-color 0.15s;
+    }
+    .waitlist-form input[type="email"]:focus { border-color: #7C3AED; }
+    .waitlist-form button {
+      height: 50px;
+      padding: 0 22px;
+      background: #7C3AED;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 0 10px 10px 0;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .waitlist-form button:hover { background: #6D28D9; }
+    .waitlist-form button:disabled { background: #A78BFA; cursor: default; }
+
+    .hero-text {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 20px;
+    }
+    
+    .trust-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1.5px solid rgba(124,58,237,0.2);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #3F3F46;
+      background: white;
+    }
+    
+    .trust-pill .check { color: #7C3AED; font-weight: 700; }
+    
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: #18181B;
+    }
+    
+    .headline-2 {
+      color: #7C3AED;
+      display: block;
+    }
+    
+    @media (max-width: 768px) {
+      .headline { font-size: 36px; }
+      .terminal-section { padding-top: 80px; }
+    }
+
+    .terminal-embed-wrap {
+      width: 100%;
+      max-width: 900px;
+    }
+    
+    .terminal {
+      width: 100%;
+      background: #0E0E0E;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(124,58,237,0.3), 0 8px 24px rgba(0,0,0,0.4);
+    }
+    
+    .terminal-bar {
+      background: #1C1C1C;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #2A2A2A;
+    }
+    
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #FF5F57; }
+    .dot-yellow { background: #FFBD2E; }
+    .dot-green { background: #28CA41; }
+    
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .terminal-body {
+      padding: 28px 32px 36px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 380px;
+      overflow-x: hidden;
+    }
+    
+    .line { display: block; white-space: pre-wrap; word-break: break-word; max-width: 100%; }
+    .line-empty { display: block; height: 1.7em; }
+    .prompt { color: #7C3AED; }
+    .cmd { color: #E2E2E2; }
+    .success { color: #28CA41; }
+    .error { color: #FF5F57; }
+    .comment { color: #555; }
+    .dim { color: #888; }
+    .highlight { color: #A78BFA; font-weight: 700; }
+    .white { color: #ffffff; font-weight: 700; }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: #7C3AED;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    
+    @media (max-width: 768px) {
+      .terminal-body { padding: 16px 18px 24px; font-size: 12px; min-height: 260px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wordmark"><span class="wm-text">bankrails</span><span class="rail-lines" aria-hidden="true"></span></div>
+
+  <div class="terminal-section">
+    <div class="hero-text" style="text-align:center;align-items:center;">
+      <div class="trust-pills">
+        <span class="trust-pill"><span class="check">✓</span> Real ACH &amp; wire transfers</span>
+        <span class="trust-pill"><span class="check">✓</span> Full audit trail</span>
+        <span class="trust-pill"><span class="check">✓</span> Reversible payments</span>
+      </div>
+      <h1 class="headline">Your Agents Are Ready.<br><span class="headline-2">Your Payments Aren't.</span></h1>
+    </div>
+    <div class="terminal-embed-wrap">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="terminal-title">bankrails — bash</span>
+        </div>
+        <div class="terminal-body" id="terminal"></div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="form-section">
+    <form id="waitlist-form" class="waitlist-form">
+      <input type="email" id="waitlist-email" placeholder="Enter your email" required autocomplete="email">
+      <button type="submit">Get Early Access</button>
+    </form>
+    
+    <p class="trust">
+      <span aria-hidden="true">🔒</span> Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
+    </p>
+  </div>
+
+  
+  <script>
+    
+  </script>
+
+
+  
+
+  <script>
+    document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button');
+      const email = document.getElementById('waitlist-email').value;
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      try {
+        const res = await fetch('https://api.hsforms.com/submissions/v3/integration/submit/50799094/63247df3-fd8f-4fdd-b8cf-991d56bcdab6', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields: [{ name: 'email', value: email }], context: { pageUri: window.location.href } })
+        });
+        if (res.ok) {
+          this.innerHTML = '<p style="color:#7C3AED;font-weight:600;font-size:16px;">✓ You\'re on the list!</p>';
+        } else {
+          btn.disabled = false; btn.textContent = 'Get Early Access';
+        }
+      } catch(err) {
+        btn.disabled = false; btn.textContent = 'Get Early Access';
+      }
+    });
+  </script>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    let cursor = null;
+
+    const SCRIPT = [
+      { type: 'prompt', text: 'agent.close_deal()', delay: 600 },
+      { type: 'output', cls: 'success', text: '✓ Deal closed. Payment due: $12,450.00', delay: 400 },
+      { type: 'prompt', text: 'agent.send_payment()', delay: 800 },
+      { type: 'output', cls: 'error',   text: '✗ Error: No payment method available', delay: 300 },
+      { type: 'empty', delay: 600 },
+      { type: 'output', cls: 'dim',     text: '# AI agents can negotiate. Execute. Close deals.', delay: 100 },
+      { type: 'output', cls: 'white',   text: "  They can't move money.", delay: 800 },
+      { type: 'empty', delay: 800 },
+      { type: 'prompt', text: 'wallet.transfer()    ', delay: 500 },
+      { type: 'inline-comment', text: '# crypto only', delay: 200 },
+      { type: 'prompt', text: 'prepaid_card.pay()   ', delay: 400 },
+      { type: 'inline-comment', text: '# not real banking', delay: 200 },
+      { type: 'prompt', text: 'write_check()        ', delay: 400 },
+      { type: 'inline-comment', text: '# seriously?', delay: 500 },
+      { type: 'empty', delay: 1000 },
+      { type: 'output', cls: 'dim',     text: '# switching to bankrails...', delay: 200 },
+      { type: 'prompt', text: 'bankrails.init()', delay: 600 },
+      { type: 'output', cls: 'success', text: '✓ Connected. Real ACH + wire rails.', delay: 500 },
+      { type: 'prompt', text: 'payment.authorize(amount=12450, vendor="Acme")', delay: 700 },
+      { type: 'output', cls: 'success', text: '✓ Multi-party authorization: approved', delay: 400 },
+      { type: 'prompt', text: 'payment.execute()', delay: 600 },
+      { type: 'output', cls: 'success', text: '✓ Payment sent via ACH', delay: 300 },
+      { type: 'output', cls: 'success', text: '✓ Full audit trail recorded', delay: 300 },
+      { type: 'prompt', text: 'agent.status()', delay: 500 },
+      { type: 'output', cls: 'highlight',text: '✓ Deal closed. Payment complete. No human involved.', delay: 400 },
+    ];
+
+    function addCursor() {
+      if (cursor) cursor.remove();
+      cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      terminal.appendChild(cursor);
+    }
+
+    function removeCursor() {
+      if (cursor) { cursor.remove(); cursor = null; }
+    }
+
+    async function typeText(el, text, speed = 38) {
+      for (const ch of text) {
+        el.textContent += ch;
+        await sleep(speed + Math.random() * 20 - 10);
+      }
+    }
+
+    async function runScript() {
+      for (const step of SCRIPT) {
+        await sleep(step.delay || 300);
+
+        if (step.type === 'empty') {
+          const el = document.createElement('span');
+          el.className = 'line-empty';
+          removeCursor();
+          terminal.insertBefore(el, cursor);
+          addCursor();
+          continue;
+        }
+
+        if (step.type === 'output') {
+          const el = document.createElement('span');
+          el.className = `line ${step.cls || ''}`;
+          removeCursor();
+          terminal.appendChild(el);
+          await typeText(el, step.text, 18);
+          terminal.appendChild(document.createTextNode('\n'));
+          addCursor();
+          continue;
+        }
+
+        if (step.type === 'prompt') {
+          const line = document.createElement('span');
+          line.className = 'line';
+          const promptEl = document.createElement('span');
+          promptEl.className = 'prompt';
+          promptEl.textContent = '$ ';
+          const cmdEl = document.createElement('span');
+          cmdEl.className = 'cmd';
+          line.appendChild(promptEl);
+          line.appendChild(cmdEl);
+          removeCursor();
+          terminal.appendChild(line);
+          addCursor();
+          await typeText(cmdEl, step.text);
+          terminal.appendChild(document.createTextNode('\n'));
+          continue;
+        }
+
+        if (step.type === 'inline-comment') {
+          const commentEl = document.createElement('span');
+          commentEl.className = 'comment';
+          // Find the last prompt line and append to it
+          const lines = terminal.querySelectorAll('.line');
+          const lastLine = lines[lines.length - 1];
+          if (lastLine) {
+            removeCursor();
+            lastLine.appendChild(commentEl);
+            await typeText(commentEl, '  ' + step.text, 22);
+            terminal.appendChild(document.createTextNode('\n'));
+            addCursor();
+          }
+          continue;
+        }
+      }
+
+      // Loop after pause
+      await sleep(4000);
+      terminal.innerHTML = '';
+      cursor = null;
+      addCursor();
+      runScript();
+    }
+
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    addCursor();
+    sleep(800).then(runScript);
+  </script>
+</body>
+</html>
