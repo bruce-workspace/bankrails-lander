@@ -107,7 +107,7 @@
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      gap: 24px;
+      gap: 32px;
       max-width: 520px;
       flex: 1;
     }
@@ -450,6 +450,8 @@
       cursor: pointer;
       white-space: nowrap;
       transition: background 0.15s;
+      -webkit-appearance: none;
+      appearance: none;
     }
     .waitlist-form button:hover { background: #6D28D9; }
     .waitlist-form button:disabled { background: #A78BFA; cursor: default; }
@@ -496,7 +498,7 @@
       .hero { padding: 16px 20px 40px; }
       .page { gap: 16px; text-align: left; align-items: flex-start; }
       .page .tagline { text-align: left; }
-      .trust-pills { justify-content: flex-start; }
+      .trust-pills { justify-content: center; }
       .trust { align-self: flex-start; }
 
       
@@ -548,16 +550,16 @@
         <!-- Tagline -->
         <p class="tagline">No wallets. No gas fees. No rug pulls. Just payments that actually work.</p>
 
-        <!-- Waitlist form -->
-        <form id="waitlist-form" class="waitlist-form">
-          <input type="email" id="waitlist-email" placeholder="Enter your email" required autocomplete="email">
-          <button type="submit">Get Early Access</button>
-        </form>
-
-
-        <p class="trust">
-          <span aria-hidden="true">🔒</span> Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
-        </p>
+        <!-- Waitlist form + trust (grouped tight) -->
+        <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
+          <form id="waitlist-form" class="waitlist-form">
+            <input type="email" id="waitlist-email" placeholder="Enter your email" required autocomplete="email">
+            <button type="submit">Get Early Access</button>
+          </form>
+          <p class="trust" style="margin:0;">
+            <span aria-hidden="true">🔒</span> Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener noreferrer">Bank Shot</a>
+          </p>
+        </div>
 
       </main>
 
