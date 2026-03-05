@@ -604,14 +604,21 @@
         const res = await fetch('https://api.hsforms.com/submissions/v3/integration/submit/50799094/63247df3-fd8f-4fdd-b8cf-991d56bcdab6', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fields: [{ name: 'email', value: email }], context: { pageUri: window.location.href } })
+          body: JSON.stringify({
+            fields: [{ name: 'email', value: email }],
+            context: { pageUri: window.location.href, pageName: 'BankRails Waitlist' }
+          })
         });
+        const data = await res.json().catch(() => ({}));
         if (res.ok) {
           this.innerHTML = '<p style="color:#7C3AED;font-weight:600;font-size:16px;">✓ You\'re on the list!</p>';
         } else {
+          console.error('HubSpot submission error:', res.status, data);
           btn.disabled = false; btn.textContent = 'Get Early Access';
+          // Show error details in console for debugging
         }
       } catch(err) {
+        console.error('HubSpot fetch error:', err);
         btn.disabled = false; btn.textContent = 'Get Early Access';
       }
     });
