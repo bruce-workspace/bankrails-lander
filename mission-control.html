@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rule 1 // Mission Control</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:              #080d17;
+      --surface:         #0f1624;
+      --surface-raised:  #162033;
+      --surface-high:    #1d2a40;
+      --border:          rgba(255,255,255,0.07);
+      --border-bright:   rgba(255,255,255,0.13);
+      --text:            #dce6f7;
+      --text-dim:        #5a7299;
+      --text-muted:      #2e4266;
+      --amber:           #e8a930;
+      --amber-dim:       rgba(232,169,48,0.12);
+      --emerald:         #10b981;
+      --emerald-dim:     rgba(16,185,129,0.12);
+      --sky:             #38bdf8;
+      --sky-dim:         rgba(56,189,248,0.12);
+      --rose:            #f87171;
+      --rose-dim:        rgba(248,113,113,0.12);
+      --slate:           #94a3b8;
+      --slate-dim:       rgba(148,163,184,0.10);
+      --font-body:       'IBM Plex Sans', system-ui, sans-serif;
+      --font-mono:       'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse at 50% 0%, rgba(56,189,248,0.04) 0%, transparent 60%),
+        radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 0 40px;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      border-bottom: 1px solid var(--border-bright);
+      background: rgba(8,13,23,0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      background: var(--amber);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .brand-mark span {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 13px;
+      color: #080d17;
+      letter-spacing: -0.5px;
+    }
+    .brand-title {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+    }
+    .brand-title strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .header-clock {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--amber);
+      letter-spacing: 0.04em;
+    }
+    .header-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-align: right;
+      margin-top: 2px;
+    }
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-pill::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .status-pill.live {
+      background: var(--emerald-dim);
+      color: var(--emerald);
+      border: 1px solid rgba(16,185,129,0.25);
+    }
+    .status-pill.live::before { background: var(--emerald); box-shadow: 0 0 6px var(--emerald); }
+    .status-pill.muted {
+      background: var(--slate-dim);
+      color: var(--slate);
+      border: 1px solid rgba(148,163,184,0.2);
+    }
+    .status-pill.muted::before { background: var(--slate); }
+
+    /* ─── MAIN LAYOUT ─── */
+    .main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 28px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── KPI STRIP ─── */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.4s ease both;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .kpi-card.amber::before  { background: var(--amber); }
+    .kpi-card.emerald::before { background: var(--emerald); }
+    .kpi-card.sky::before    { background: var(--sky); }
+    .kpi-card.rose::before   { background: var(--rose); }
+    .kpi-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .kpi-card.amber  .kpi-value { color: var(--amber); }
+    .kpi-card.emerald .kpi-value { color: var(--emerald); }
+    .kpi-card.sky    .kpi-value { color: var(--sky); }
+    .kpi-card.rose   .kpi-value { color: var(--rose); }
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+
+    /* ─── PORTFOLIO GRID ─── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .company-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      cursor: default;
+      transition: border-color 0.15s, background 0.15s;
+      animation: fadeUp 0.4s ease both;
+    }
+    .company-card:hover {
+      border-color: var(--border-bright);
+      background: var(--surface-raised);
+    }
+    .company-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .company-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .company-cat {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+    .status-badge {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .badge-active   { background: var(--emerald-dim); color: var(--emerald); border: 1px solid rgba(16,185,129,0.2); }
+    .badge-attention { background: var(--amber-dim);  color: var(--amber);   border: 1px solid rgba(232,169,48,0.2); }
+    .badge-building { background: var(--sky-dim);     color: var(--sky);     border: 1px solid rgba(56,189,248,0.2); }
+    .badge-quiet    { background: var(--slate-dim);   color: var(--slate);   border: 1px solid rgba(148,163,184,0.15); }
+    .company-metric {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+    .company-metric-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .company-activity {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .activity-time {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* ─── TWO-COL ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* ─── PANEL ─── */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .panel-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .panel-count {
+      font-size: 10px;
+      background: var(--surface-raised);
+      padding: 2px 7px;
+      border-radius: 10px;
+      color: var(--text-dim);
+    }
+
+    /* ─── OPS LIST ─── */
+    .ops-list { display: flex; flex-direction: column; gap: 8px; }
+    .ops-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      background: var(--surface-raised);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .ops-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .ops-dot.green   { background: var(--emerald); box-shadow: 0 0 5px rgba(16,185,129,0.4); }
+    .ops-dot.amber   { background: var(--amber); }
+    .ops-dot.blue    { background: var(--sky); }
+    .ops-dot.gray    { background: var(--slate); }
+    .ops-content { flex: 1; min-width: 0; }
+    .ops-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .ops-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+    .ops-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-left: auto;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+
+    /* ─── DECISION LIST ─── */
+    .decision-list { display: flex; flex-direction: column; gap: 8px; }
+    .decision-item {
+      padding: 12px 14px;
+      background: var(--surface-raised);
+      border-radius: 6px;
+      border-left: 2px solid var(--amber);
+    }
+    .decision-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .decision-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .decision-stakes {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--amber);
+      margin-top: 5px;
+    }
+
+    /* ─── INTEL ROW ─── */
+    .intel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .intel-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      animation: fadeUp 0.55s ease both;
+    }
+    .intel-card:hover { border-color: var(--border-bright); }
+    .intel-company {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 5px;
+    }
+    .intel-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .intel-summary {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .intel-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .intel-date {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+    .intel-link {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--sky);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+    .intel-link:hover { text-decoration: underline; }
+
+    /* ─── ACTIVITY FEED ─── */
+    .feed-list { display: flex; flex-direction: column; gap: 0; }
+    .feed-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-time {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      min-width: 72px;
+      padding-top: 1px;
+      flex-shrink: 0;
+    }
+    .feed-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--border-bright);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .feed-text {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .feed-text strong { color: var(--text); font-weight: 500; }
+    .feed-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .feed-tag.rs   { background: var(--rose-dim);    color: var(--rose); }
+    .feed-tag.br   { background: var(--sky-dim);     color: var(--sky); }
+    .feed-tag.rox  { background: var(--slate-dim);   color: var(--slate); }
+    .feed-tag.kc   { background: var(--amber-dim);   color: var(--amber); }
+    .feed-tag.sys  { background: rgba(30,40,60,0.8); color: var(--text-muted); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+    .kpi-card:nth-child(2) { animation-delay: 0.10s; }
+    .kpi-card:nth-child(3) { animation-delay: 0.15s; }
+    .kpi-card:nth-child(4) { animation-delay: 0.20s; }
+    .company-card:nth-child(1) { animation-delay: 0.10s; }
+    .company-card:nth-child(2) { animation-delay: 0.14s; }
+    .company-card:nth-child(3) { animation-delay: 0.18s; }
+    .company-card:nth-child(4) { animation-delay: 0.22s; }
+    .company-card:nth-child(5) { animation-delay: 0.26s; }
+    .company-card:nth-child(6) { animation-delay: 0.30s; }
+    .company-card:nth-child(7) { animation-delay: 0.34s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1200px) {
+      .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+      .intel-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="brand-mark"><span>R1</span></div>
+      <div>
+        <div class="brand-title"><strong>RULE 1</strong> // MISSION CONTROL</div>
+        <div class="brand-title" style="font-size:10px;margin-top:2px;">Portfolio Marketing Operations</div>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <div class="header-clock" id="clock">--:--:--</div>
+      <div class="header-date" id="date">--</div>
+    </div>
+    <div class="header-status">
+      <div class="status-pill live">LIVE</div>
+      <div class="status-pill muted">MARCH 2026 · WK 10</div>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <!-- KPI STRIP -->
+    <div>
+      <div class="section-label">WEEKLY SNAPSHOT</div>
+      <div class="kpi-strip">
+        <div class="kpi-card amber">
+          <div class="kpi-label">PORTFOLIO AD SPEND</div>
+          <div class="kpi-value">$6.6k</div>
+          <div class="kpi-sub">This week · Red Sentry primary driver</div>
+        </div>
+        <div class="kpi-card emerald">
+          <div class="kpi-label">ACTIVE CAMPAIGNS</div>
+          <div class="kpi-value">8</div>
+          <div class="kpi-sub">RS (5) · FactorCloud (2) · ROX (1)</div>
+        </div>
+        <div class="kpi-card sky">
+          <div class="kpi-label">POSTS SCHEDULED</div>
+          <div class="kpi-value">14</div>
+          <div class="kpi-sub">@bankrails · Mar 3–9 · 2/day</div>
+        </div>
+        <div class="kpi-card rose">
+          <div class="kpi-label">NEEDS DECISION</div>
+          <div class="kpi-value">3</div>
+          <div class="kpi-sub">RS AI Max · Reddit replies · BankRails terminal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO GRID -->
+    <div>
+      <div class="section-label">PORTFOLIO STATUS</div>
+      <div class="portfolio-grid">
+
+        <div class="company-card">
+          <div class="company-header">
+            <div>
+              <div class="company-name">TruckerCloud</div>
+              <div class="company-cat">TELEMATICS · FLEET DATA</div>
+            </div>
+            <div class="status-badge badge-active">ACTIVE</div>
+          </div>
+          <div class="company-metric">100k+</div>
+          <div class="company-metric-label">Trucks on platform</div>
+          <div class="company-activity">
+            Compounding growth. Current portfolio growth engine. Execution scale is the unlock.
+            <div class="activity-time">No active campaigns this week</div>
+          </div>
+        </div>
+
+        <div class="company-card">
+          <div class="company-header">
+            <div>
+              <div class="company-name">Red Sentry</div>
+              <div class="company-cat">CYBERSECURITY · PENTESTING</div>
+            </div>
+            <div class="status-badge badge-attention">ATTENTION</div>
+          </div>
+          <div class="company-metric">$41k</div>
+          <div class="company-metric-label">Monthly ad spend</div>
+          <div class="company-activity">
+            Terminal video live ($150/day Google + Meta + Reddit). AI Max test burning on Web App + SOC2. Decision needed on $14.5k/mo.
+            <div class="activity-time">Today — 3 new demand gen campaigns launched</div>
+          </div>
+        </div>
+
+        <div class="company-card">
+          <div class="company-header">
+            <div>
+              <div class="company-name">Bank Shot</div>
+              <div class="company-cat">AGENTIC PAYMENTS</div>
+            </div>
+            <div class="status-badge badge-building">BUILDING</div>
+          </div>
+          <div class="company-metric">14</div>
+          <div class="company-metric-label">X posts scheduled</div>
+          <div class="company-activity">
+            Lander live at bankrails.ai (DNS pending). X content live. Allstate signal confirmed. Agentic pivot in motion.
+            <div class="activity-time">Today — content plan rolled out, competitive brief filed</div>
+          </div>
+        </div>
+
+        <div class="company-card">
+          <div class="company-header">
+            <div>
+              <div class="company-name">FactorCloud</div>
+              <div class="company-cat">FACTORING SOFTWARE</div>
+            </div>
+            <div class="status-badge badge-active">ACTIVE</div>
+          </div>
+          <div class="company-metric">2</div>
+          <div class="company-metric-label">Active campaigns</div>
+          <div class="company-activity">
+            PMAX (5k impr/$248) + Search ($269). Dual-ledger story undersold. Category narrative work needed.
+            <div class="activity-time">This week — campaigns running, no changes</div>
+          </div>
+        </div>
+
+        <div class="company-card">
+          <div class="company-header">
+            <div>
+              <div class="company-name">ROX</div>
+              <div class="company-cat">AI UNDERWRITING</div>
+            </div>
+            <div class="status-badge badge-attention">TRANSITION</div>
+          </div>
+          <div class="company-metric">$75</div>
+          <div class="company-metric-label">PMAX spend this week</div>
+          <div class="company-activity">
+            New site launching. Moving to self-serve + credit model. Decipher displacement campaign brief ready. 20 targets identified.
+            <div class="activity-time">Mar 2 — Decipher competitive brief filed</div>
+          </div>
+        </div>
+
+        <div class="company-card">
+          <div class="company-header">
+            <div>
+              <div class="company-name">Bolton Capital</div>
+              <div class="company-cat">DUMP TRUCK FACTORING</div>
+            </div>
+            <div class="status-badge badge-active">ACTIVE</div>
+          </div>
+          <div class="company-metric">Live</div>
+          <div class="company-metric-label">ROX + FactorCloud proof</div>
+          <div class="company-activity">
+            Live proving ground for the stack. Success here validates ROX + FactorCloud simultaneously. Expand verticals after dump trucks.
+            <div class="activity-time">No marketing actions this week</div>
+          </div>
+        </div>
+
+        <div class="company-card">
+          <div class="company-header">
+            <div>
+              <div class="company-name">Kill Cliff</div>
+              <div class="company-cat">CONSUMER BEVERAGE</div>
+            </div>
+            <div class="status-badge badge-quiet">QUIET</div>
+          </div>
+          <div class="company-metric">B2C</div>
+          <div class="company-metric-label">Dedicated team resource</div>
+          <div class="company-activity">
+            Separate motion from portfolio. Dedicated person on it. TikTok automation (Larry skill) queued for when infrastructure is ready.
+            <div class="activity-time">No active requests this week</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ACTIVE OPS + DECISIONS -->
+    <div class="two-col">
+
+      <div class="panel">
+        <div class="panel-title">
+          ACTIVE OPERATIONS
+          <span class="panel-count">6 in flight</span>
+        </div>
+        <div class="ops-list">
+          <div class="ops-item">
+            <div class="ops-dot green"></div>
+            <div class="ops-content">
+              <div class="ops-title">@bankrails X — 14 posts scheduled</div>
+              <div class="ops-desc">2/day, Mar 3–9. First posts fire today at 12pm + 4pm ET. Factual + humorous pairs.</div>
+            </div>
+            <div class="ops-tag badge-building">BANK SHOT</div>
+          </div>
+          <div class="ops-item">
+            <div class="ops-dot amber"></div>
+            <div class="ops-content">
+              <div class="ops-title">Red Sentry terminal ad — $150/day</div>
+              <div class="ops-desc">Running on Google (video), Meta, and Reddit. Day 1 of new demand gen push.</div>
+            </div>
+            <div class="ops-tag badge-attention">RED SENTRY</div>
+          </div>
+          <div class="ops-item">
+            <div class="ops-dot amber"></div>
+            <div class="ops-content">
+              <div class="ops-title">Red Sentry AI Max test — burning</div>
+              <div class="ops-desc">Web App + SOC2 + Pentest Demo. ~$14.5k/mo at stake. Data needed before pause decision.</div>
+            </div>
+            <div class="ops-tag badge-attention">RED SENTRY</div>
+          </div>
+          <div class="ops-item">
+            <div class="ops-dot blue"></div>
+            <div class="ops-content">
+              <div class="ops-title">bankrails.ai — DNS pending</div>
+              <div class="ops-desc">Terminal lander (index-terminal-v2.html) live on GitHub. Nate deploying to Heroku.</div>
+            </div>
+            <div class="ops-tag badge-building">BANK SHOT</div>
+          </div>
+          <div class="ops-item">
+            <div class="ops-dot blue"></div>
+            <div class="ops-content">
+              <div class="ops-title">ROX — Decipher displacement campaign</div>
+              <div class="ops-desc">Brief filed. 20 targets identified. 3 outreach angles built. Ready to execute.</div>
+            </div>
+            <div class="ops-tag badge-active">ROX</div>
+          </div>
+          <div class="ops-item">
+            <div class="ops-dot gray"></div>
+            <div class="ops-content">
+              <div class="ops-title">OpenClaw Studio — gateway config</div>
+              <div class="ops-desc">Run: openclaw config set gateway.controlUi.allowedOrigins then restart. 2 min job.</div>
+            </div>
+            <div class="ops-tag badge-quiet">TONIGHT</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          NEEDS YOUR INPUT
+          <span class="panel-count">3 open</span>
+        </div>
+        <div class="decision-list">
+          <div class="decision-item">
+            <div class="decision-title">Red Sentry — AI Max campaign pause?</div>
+            <div class="decision-desc">Web App + SOC2 + Demo campaigns have been running. Pull performance data before deciding to cut ~$14.5k/mo. I'll have numbers by EOD.</div>
+            <div class="decision-stakes">$14,500/mo at stake</div>
+          </div>
+          <div class="decision-item">
+            <div class="decision-title">Reddit replies — approve to post</div>
+            <div class="decision-desc">3 drafted replies ready: r/ycombinator "Payments for AI agents", r/LocalLLaMA protocol war thread, r/AI_Agents x402 debate. Value-add, no hard pitch. @bankrails account name does the work.</div>
+            <div class="decision-stakes">workspace/research/bankrails-reddit-replies-v1.md</div>
+          </div>
+          <div class="decision-item">
+            <div class="decision-title">BankRails terminal — vaporware risk?</div>
+            <div class="decision-desc">Nate flagged fictional API commands as potentially misleading. Jesse's read: clearly theatrical. Option A: keep as-is. Option B: swap specific commands for abstract pseudocode. Depends on product timeline.</div>
+            <div class="decision-stakes">What's the API timeline from Nate?</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- INTEL ROW -->
+    <div>
+      <div class="section-label">RECENT INTEL</div>
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-company">BANK SHOT</div>
+          <div class="intel-title">Agentic Payments Competitive Landscape</div>
+          <div class="intel-summary">Full stack breakdown: 5 core infrastructure components, incumbent analysis (Stripe, Visa, MC, Marqeta, Modern Treasury), Bank Shot's edge (ACH/wire, insurance PMF, audit trail), and build gaps (agent identity, dev API, self-serve).</div>
+          <div class="intel-footer">
+            <span class="intel-date">MAR 3, 2026</span>
+            <a href="file:///Users/bruce/.openclaw/workspace/research/bankshot-agentic-payments-landscape.md" class="intel-link">VIEW REPORT →</a>
+          </div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-company">ROX</div>
+          <div class="intel-title">Decipher Credit Intel — Displacement Brief</div>
+          <div class="intel-summary">Decipher = origination/workflow, passive monitoring. ROX angles: proactive vs reactive, self-serve vs enterprise, AI-driven vs configured rules. 20 targets identified, 3 outreach angles built.</div>
+          <div class="intel-footer">
+            <span class="intel-date">MAR 2, 2026</span>
+            <a href="file:///Users/bruce/.openclaw/workspace/research/decipher-credit-intel.md" class="intel-link">VIEW REPORT →</a>
+          </div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-company">RED SENTRY</div>
+          <div class="intel-title">Google Ads Audit — February 2026</div>
+          <div class="intel-summary">$41k/mo spend, $855 blended CPA. ~$24k/mo recoverable waste across 4 zero-converting campaigns. Network Pentesting 2.0 ($303 CPA) is the one working. Full optimization roadmap filed.</div>
+          <div class="intel-footer">
+            <span class="intel-date">FEB 27, 2026</span>
+            <a href="file:///Users/bruce/.openclaw/workspace/reports/redsentry-ads-audit-2026-02.md" class="intel-link">VIEW REPORT →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVITY FEED -->
+    <div class="panel" style="animation-delay:0.3s;">
+      <div class="panel-title">TODAY'S ACTIVITY LOG</div>
+      <div class="feed-list">
+        <div class="feed-item">
+          <div class="feed-time">9:28 AM</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text">Mission Control prototype build started <span class="feed-tag sys">SYS</span></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-time">9:02 AM</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text"><strong>Agentic payments competitive brief</strong> filed — 5-layer stack breakdown, full incumbent analysis <span class="feed-tag br">BANKSHOT</span></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-time">7:55 AM</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text"><strong>14 @bankrails X posts</strong> scheduled in Postiz — Mar 3–9, 2/day (factual + humorous pairs) <span class="feed-tag br">BANKSHOT</span></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-time">7:40 AM</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text"><strong>3 Reddit reply drafts</strong> written — r/ycombinator, r/LocalLLaMA, r/AI_Agents. Pending approval. <span class="feed-tag br">BANKSHOT</span></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-time">7:20 AM</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text"><strong>Red Sentry terminal ad</strong> verified live — Google video, Meta, Reddit ($150/day) <span class="feed-tag rs">RED SENTRY</span></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-time">7:05 AM</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text"><strong>Square (1080×1080) terminal video</strong> rendered and uploaded to Drive <span class="feed-tag rs">RED SENTRY</span></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-time">4:49 AM</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text">Morning briefing delivered — portfolio status, Red Sentry AI Max flag, BankRails next steps <span class="feed-tag sys">SYS</span></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-time">Yesterday</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text"><strong>bankrails.ai lander</strong> (terminal v2) deployed by Nate — live with self-hosted animation <span class="feed-tag br">BANKSHOT</span></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-time">Yesterday</div>
+          <div class="feed-dot"></div>
+          <div class="feed-text"><strong>Red Sentry terminal ad</strong> launched on 3 channels simultaneously. Horizontal + vertical MP4s in Drive. <span class="feed-tag rs">RED SENTRY</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .main -->
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      const s = String(now.getSeconds()).padStart(2,'0');
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+      document.getElementById('date').textContent =
+        `${days[now.getDay()]} ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html>
