@@ -588,12 +588,6 @@
 
 
   <script>
-    // Force inline layout after HubSpot developer-embed renders (uses hsfc-* classes)
-    , 100);
-    setTimeout(() => clearInterval(timer), 10000); // give up after 10s
-  </script>
-
-  <script>
     document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       const btn = this.querySelector('button');
