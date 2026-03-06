@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BankRails — Developer Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0C0C0E;
+  --surface: #141416;
+  --surface2: #1C1C20;
+  --border: rgba(255,255,255,0.07);
+  --purple: #8B5CF6;
+  --purple-dim: rgba(139,92,246,0.1);
+  --green: #22C55E;
+  --red: #EF4444;
+  --amber: #F59E0B;
+  --blue: #3B82F6;
+  --text: #FAFAFA;
+  --muted: #71717A;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Space Grotesk', sans-serif;
+}
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; display: flex; flex-direction: column; }
+
+/* Top bar */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 52px; border-bottom: 1px solid var(--border);
+  background: var(--bg); position: sticky; top: 0; z-index: 50;
+}
+.logo { font-weight: 700; font-size: 17px; letter-spacing: -0.03em; }
+.logo em { color: var(--purple); font-style: normal; }
+.topbar-tabs { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.topbar-tab {
+  padding: 6px 16px; font-size: 13px; font-weight: 500; cursor: pointer;
+  background: none; border: none; color: var(--muted); font-family: var(--sans);
+  transition: all 0.1s;
+}
+.topbar-tab.active { background: var(--surface2); color: var(--text); }
+.env-badge {
+  background: rgba(34,197,94,0.1); color: var(--green);
+  border: 1px solid rgba(34,197,94,0.2); border-radius: 6px;
+  padding: 4px 10px; font-size: 12px; font-weight: 600; font-family: var(--mono);
+}
+
+/* Main layout */
+.body { display: flex; flex: 1; }
+.sidebar {
+  width: 200px; flex-shrink: 0; padding: 16px 8px;
+  border-right: 1px solid var(--border);
+}
+.nav-item {
+  display: flex; align-items: center; gap: 8px; padding: 7px 10px;
+  border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer;
+  color: var(--muted); transition: all 0.1s;
+}
+.nav-item.active { color: var(--text); background: var(--surface2); }
+.nav-item:hover:not(.active) { color: var(--text); }
+.nav-section { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: #3f3f46; padding: 12px 10px 4px; }
+
+.content { flex: 1; overflow: auto; }
+
+/* Views */
+.view { display: none; padding: 24px; max-width: 1100px; }
+.view.active { display: block; }
+
+/* Quick start hero */
+.quickstart {
+  background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(59,130,246,0.05) 100%);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 12px; padding: 24px; margin-bottom: 24px;
+  display: flex; align-items: flex-start; gap: 32px;
+}
+.qs-left { flex: 1; }
+.qs-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.02em; }
+.qs-sub { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+.qs-steps { display: flex; flex-direction: column; gap: 12px; }
+.qs-step { display: flex; align-items: flex-start; gap: 12px; }
+.qs-num { width: 22px; height: 22px; border-radius: 50%; background: var(--purple); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.qs-step-text { font-size: 13px; color: var(--muted); }
+.qs-step-text strong { color: var(--text); }
+
+.code-mini {
+  background: #08080A; border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px; font-family: var(--mono); font-size: 12.5px; line-height: 1.75;
+  flex: 1; min-width: 360px;
+}
+.c-comment { color: #3f3f46; }
+.c-key { color: #A78BFA; }
+.c-str { color: #86EFAC; }
+.c-num { color: #FCD34D; }
+.c-fn { color: #93C5FD; }
+.c-op { color: #6B7280; }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px;
+}
+.stat-l { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 8px; }
+.stat-v { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 4px; }
+.stat-d { font-size: 12px; color: var(--muted); }
+.stat-d.up { color: var(--green); }
+
+/* Live feed */
+.feed-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.feed-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); }
+.feed-title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.tx-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 11px 18px; border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 13px; transition: background 0.1s;
+}
+.tx-row:hover { background: rgba(255,255,255,0.015); }
+.tx-row:last-child { border-bottom: none; }
+.tx-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.tx-icon-pay { background: rgba(139,92,246,0.12); }
+.tx-icon-recv { background: rgba(34,197,94,0.1); }
+.tx-icon-fail { background: rgba(239,68,68,0.1); }
+.tx-main { flex: 1; }
+.tx-desc { font-weight: 500; margin-bottom: 2px; }
+.tx-meta { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+.tx-amount { font-family: var(--mono); font-weight: 600; text-align: right; }
+.tx-amount.out { color: var(--muted); }
+.tx-amount.in { color: var(--green); }
+.tx-time { font-family: var(--mono); font-size: 11px; color: #3f3f46; min-width: 60px; text-align: right; }
+
+/* Agent cards */
+.agents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+.agent-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px;
+  cursor: pointer; transition: border-color 0.15s;
+}
+.agent-card:hover { border-color: rgba(139,92,246,0.3); }
+.agent-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.agent-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.agent-status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.agent-status-dot.online { background: var(--green); }
+.agent-status-dot.idle { background: var(--muted); }
+.agent-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.agent-id { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+.agent-bal-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 2px; }
+.agent-bal { font-size: 20px; font-weight: 700; font-family: var(--mono); letter-spacing: -0.02em; }
+.agent-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+
+/* Playground */
+.playground {
+  background: var(--surface); border: 1px solid rgba(139,92,246,0.25); border-radius: 10px; padding: 20px; margin-bottom: 16px;
+}
+.playground-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.playground-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pg-field label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 6px; }
+.pg-input {
+  width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 7px;
+  padding: 9px 12px; font-family: var(--sans); font-size: 13px; color: var(--text);
+  outline: none; transition: border-color 0.15s;
+}
+.pg-input:focus { border-color: var(--purple); }
+.pg-select {
+  width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 7px;
+  padding: 9px 12px; font-family: var(--sans); font-size: 13px; color: var(--text);
+  outline: none; appearance: none;
+}
+.btn-run {
+  background: var(--purple); color: #fff; border: none; border-radius: 8px;
+  padding: 10px 24px; font-size: 14px; font-weight: 600; font-family: var(--sans);
+  cursor: pointer; transition: all 0.15s; margin-top: 12px; display: flex; align-items: center; gap: 8px;
+}
+.btn-run:hover { background: #7C3AED; }
+.btn-ghost-sm {
+  background: var(--surface2); color: var(--muted); border: none; border-radius: 6px;
+  padding: 5px 12px; font-size: 12px; font-weight: 500; font-family: var(--sans); cursor: pointer;
+}
+.response-box {
+  background: #08080A; border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; font-family: var(--mono); font-size: 12px; line-height: 1.7;
+  margin-top: 12px; min-height: 100px; display: none;
+}
+
+/* Status badge */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600;
+}
+.badge-green { background: rgba(34,197,94,0.1); color: var(--green); }
+.badge-amber { background: rgba(245,158,11,0.1); color: var(--amber); }
+.badge-purple { background: rgba(139,92,246,0.12); color: #A78BFA; }
+.badge-muted { background: rgba(113,113,122,0.15); color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">bank<em>rails</em></div>
+  <div class="topbar-tabs">
+    <button class="topbar-tab active" onclick="sw('home')">Overview</button>
+    <button class="topbar-tab" onclick="sw('agents')">Agents</button>
+    <button class="topbar-tab" onclick="sw('playground')">Playground</button>
+  </div>
+  <div class="env-badge">● test mode</div>
+</div>
+
+<div class="body">
+  <div class="sidebar">
+    <div class="nav-section">Build</div>
+    <div class="nav-item active" onclick="sw('home')">📊 Overview</div>
+    <div class="nav-item" onclick="sw('agents')">🤖 Agents</div>
+    <div class="nav-item" onclick="sw('playground')">⚡ Playground</div>
+    <div class="nav-section">Manage</div>
+    <div class="nav-item">🔔 Webhooks</div>
+    <div class="nav-item">🔑 API Keys</div>
+    <div class="nav-item">📋 Logs</div>
+    <div class="nav-section">Docs</div>
+    <div class="nav-item">📖 API Reference</div>
+    <div class="nav-item">⚙ SDKs</div>
+  </div>
+
+  <div class="content">
+
+    <!-- HOME VIEW -->
+    <div class="view active" id="view-home">
+
+      <!-- Quick start -->
+      <div class="quickstart">
+        <div class="qs-left">
+          <div class="qs-title">Ship payments in 5 minutes</div>
+          <div class="qs-sub">Your agent can send, receive, and track money with 3 API calls.</div>
+          <div class="qs-steps">
+            <div class="qs-step">
+              <div class="qs-num">1</div>
+              <div class="qs-step-text"><strong>Install the SDK</strong> — <code style="font-family:var(--mono);font-size:12px;color:#A78BFA">npm install bankrails</code></div>
+            </div>
+            <div class="qs-step">
+              <div class="qs-num">2</div>
+              <div class="qs-step-text"><strong>Create an agent wallet</strong> — one line, returns a wallet ID</div>
+            </div>
+            <div class="qs-step">
+              <div class="qs-num">3</div>
+              <div class="qs-step-text"><strong>Trigger a payment</strong> — agent pays or gets paid, webhook fires on settlement</div>
+            </div>
+          </div>
+        </div>
+        <div class="code-mini">
+<span class="c-comment">// Your agent can pay in 3 lines</span>
+<span class="c-key">import</span> <span class="c-op">{</span> BankRails <span class="c-op">}</span> <span class="c-key">from</span> <span class="c-str">'bankrails'</span>
+
+<span class="c-key">const</span> br <span class="c-op">=</span> <span class="c-key">new</span> <span class="c-fn">BankRails</span><span class="c-op">(</span>process.env.BR_API_KEY<span class="c-op">)</span>
+
+<span class="c-comment">// Create a wallet for your agent</span>
+<span class="c-key">const</span> wallet <span class="c-op">=</span> <span class="c-key">await</span> br.agents.<span class="c-fn">create</span><span class="c-op">({</span>
+  name: <span class="c-str">'research-agent-01'</span><span class="c-op">,</span>
+  budget: <span class="c-num">50.00</span>  <span class="c-comment">// hard limit</span>
+<span class="c-op">})</span>
+
+<span class="c-comment">// Agent pays for a completed task</span>
+<span class="c-key">await</span> br.payments.<span class="c-fn">send</span><span class="c-op">({</span>
+  from: wallet.id<span class="c-op">,</span>
+  to:   <span class="c-str">'acct_freelancer_42'</span><span class="c-op">,</span>
+  amount: <span class="c-num">12.50</span><span class="c-op">,</span>
+  memo:  <span class="c-str">'SEO article — 1200 words'</span>
+<span class="c-op">})</span>
+<span class="c-comment">// → { id: 'pay_9kXm', status: 'processing' }</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-l">Test Volume (7d)</div>
+          <div class="stat-v">$1,284</div>
+          <div class="stat-d up">↑ 340 transactions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-l">Active Agents</div>
+          <div class="stat-v">6</div>
+          <div class="stat-d">2 sending right now</div>
+        </div>
+        <div class="stat">
+          <div class="stat-l">Avg Latency</div>
+          <div class="stat-v">118ms</div>
+          <div class="stat-d">API response time</div>
+        </div>
+        <div class="stat">
+          <div class="stat-l">Success Rate</div>
+          <div class="stat-v">100%</div>
+          <div class="stat-d up">0 failures this week</div>
+        </div>
+      </div>
+
+      <!-- Live feed -->
+      <div class="feed-card">
+        <div class="feed-header">
+          <div class="feed-title"><div class="live-dot"></div> Live Transactions</div>
+          <button class="btn-ghost-sm">View all</button>
+        </div>
+        <div id="tx-list">
+          <div class="tx-row">
+            <div class="tx-icon tx-icon-pay">💸</div>
+            <div class="tx-main">
+              <div class="tx-desc">research-agent-01 → @wordsmith_api</div>
+              <div class="tx-meta">pay_9kXm2Np · ACH · memo: "1200-word SEO article"</div>
+            </div>
+            <div class="tx-amount out">-$12.50</div>
+            <div class="tx-time">just now</div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon tx-icon-recv">💰</div>
+            <div class="tx-main">
+              <div class="tx-desc">client-wallet → scheduler-agent-01</div>
+              <div class="tx-meta">pay_7mRq4Kj · ACH · memo: "task bundle — 10 tasks"</div>
+            </div>
+            <div class="tx-amount in">+$45.00</div>
+            <div class="tx-time">2m ago</div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon tx-icon-pay">💸</div>
+            <div class="tx-main">
+              <div class="tx-desc">scraper-agent-03 → data-provider-api</div>
+              <div class="tx-meta">pay_3pLx8Wr · ACH · memo: "10k row dataset pull"</div>
+            </div>
+            <div class="tx-amount out">-$3.20</div>
+            <div class="tx-time">8m ago</div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon tx-icon-pay">💸</div>
+            <div class="tx-main">
+              <div class="tx-desc">scheduler-agent-01 → research-agent-01</div>
+              <div class="tx-meta">pay_5hQr1Nm · ACH · memo: "competitive analysis task"</div>
+            </div>
+            <div class="tx-amount out">-$8.00</div>
+            <div class="tx-time">14m ago</div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon tx-icon-recv">💰</div>
+            <div class="tx-main">
+              <div class="tx-desc">client-wallet → scraper-agent-03</div>
+              <div class="tx-meta">pay_2kVp9Qx · ACH · memo: "monthly data subscription"</div>
+            </div>
+            <div class="tx-amount in">+$29.00</div>
+            <div class="tx-time">1h ago</div>
+          </div>
+          <div class="tx-row">
+            <div class="tx-icon tx-icon-pay">💸</div>
+            <div class="tx-main">
+              <div class="tx-desc">media-agent-02 → video-render-api</div>
+              <div class="tx-meta">pay_1jMs7Bk · ACH · memo: "60s video render"</div>
+            </div>
+            <div class="tx-amount out">-$0.80</div>
+            <div class="tx-time">1h ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENTS VIEW -->
+    <div class="view" id="view-agents">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:2px">Agent Wallets</div>
+          <div style="font-size:14px;color:var(--muted)">6 agents · $284.40 total balance</div>
+        </div>
+        <button onclick="alert('In production: creates a new agent wallet + returns API credentials')" style="background:var(--purple);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;font-family:var(--sans);cursor:pointer">+ New Agent</button>
+      </div>
+
+      <div class="agents-grid">
+        <div class="agent-card">
+          <div class="agent-header">
+            <div class="agent-icon">🔍</div>
+            <div class="agent-status-dot online"></div>
+          </div>
+          <div class="agent-name">research-agent-01</div>
+          <div class="agent-id">agt_r1_8kXm2NpQ</div>
+          <div class="agent-bal-label">Balance</div>
+          <div class="agent-bal">$38.50</div>
+          <div class="agent-footer">
+            <span class="badge badge-green">● Active</span>
+            <span>12 tx today</span>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header">
+            <div class="agent-icon">📅</div>
+            <div class="agent-status-dot online"></div>
+          </div>
+          <div class="agent-name">scheduler-agent-01</div>
+          <div class="agent-id">agt_s1_3mRq4KjL</div>
+          <div class="agent-bal-label">Balance</div>
+          <div class="agent-bal">$112.00</div>
+          <div class="agent-footer">
+            <span class="badge badge-green">● Active</span>
+            <span>8 tx today</span>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header">
+            <div class="agent-icon">🕷</div>
+            <div class="agent-status-dot online"></div>
+          </div>
+          <div class="agent-name">scraper-agent-03</div>
+          <div class="agent-id">agt_sc3_9pLx8WrK</div>
+          <div class="agent-bal-label">Balance</div>
+          <div class="agent-bal">$25.80</div>
+          <div class="agent-footer">
+            <span class="badge badge-amber">● Busy</span>
+            <span>31 tx today</span>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header">
+            <div class="agent-icon">🎬</div>
+            <div class="agent-status-dot idle"></div>
+          </div>
+          <div class="agent-name">media-agent-02</div>
+          <div class="agent-id">agt_m2_5hQr1NmP</div>
+          <div class="agent-bal-label">Balance</div>
+          <div class="agent-bal">$67.20</div>
+          <div class="agent-footer">
+            <span class="badge badge-muted">Idle</span>
+            <span>3 tx today</span>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-header">
+            <div class="agent-icon">✍️</div>
+            <div class="agent-status-dot idle"></div>
+          </div>
+          <div class="agent-name">writer-agent-04</div>
+          <div class="agent-id">agt_w4_2kVp9QxR</div>
+          <div class="agent-bal-label">Balance</div>
+          <div class="agent-bal">$18.90</div>
+          <div class="agent-footer">
+            <span class="badge badge-muted">Idle</span>
+            <span>5 tx today</span>
+          </div>
+        </div>
+        <div class="agent-card" style="border-style:dashed;opacity:0.4;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;min-height:160px" onclick="alert('+ New Agent')">
+          <div style="font-size:28px">+</div>
+          <div style="font-size:13px;color:var(--muted)">New agent wallet</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAYGROUND VIEW -->
+    <div class="view" id="view-playground">
+      <div style="margin-bottom:20px">
+        <div style="font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:2px">API Playground</div>
+        <div style="font-size:14px;color:var(--muted)">Test payments in real time — test mode only, no real money moves</div>
+      </div>
+
+      <div class="playground">
+        <div class="playground-title">⚡ Send a Payment</div>
+        <div class="playground-grid">
+          <div class="pg-field">
+            <label>From Agent</label>
+            <select class="pg-select">
+              <option>research-agent-01 ($38.50)</option>
+              <option>scheduler-agent-01 ($112.00)</option>
+              <option>scraper-agent-03 ($25.80)</option>
+            </select>
+          </div>
+          <div class="pg-field">
+            <label>To</label>
+            <input class="pg-input" placeholder="acct_xxx or agent ID" value="acct_freelancer_42">
+          </div>
+          <div class="pg-field">
+            <label>Amount (USD)</label>
+            <input class="pg-input" type="number" placeholder="0.00" value="12.50">
+          </div>
+          <div class="pg-field">
+            <label>Payment Method</label>
+            <select class="pg-select">
+              <option>ACH (2-4h)</option>
+              <option>Wire (same day)</option>
+            </select>
+          </div>
+          <div class="pg-field" style="grid-column:1/-1">
+            <label>Memo</label>
+            <input class="pg-input" placeholder="What's this for?" value="Research task — competitor analysis">
+          </div>
+        </div>
+        <button class="btn-run" onclick="runPayment()">
+          <span>▶</span> Send Test Payment
+        </button>
+        <div class="response-box" id="pg-response"></div>
+      </div>
+
+      <div class="feed-card">
+        <div class="feed-header">
+          <div class="feed-title">Recent Playground Requests</div>
+          <button class="btn-ghost-sm">Clear</button>
+        </div>
+        <div class="tx-row">
+          <span class="badge badge-green" style="min-width:42px;justify-content:center">200</span>
+          <span style="font-family:var(--mono);font-size:12px;color:#A78BFA;min-width:100px">POST</span>
+          <span style="font-family:var(--mono);font-size:12px;flex:1">/v1/payments/send</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--green)">112ms</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">2m ago</span>
+        </div>
+        <div class="tx-row">
+          <span class="badge badge-green" style="min-width:42px;justify-content:center">200</span>
+          <span style="font-family:var(--mono);font-size:12px;color:#86EFAC;min-width:100px">GET</span>
+          <span style="font-family:var(--mono);font-size:12px;flex:1">/v1/agents/agt_r1_8kXm2NpQ</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--green)">44ms</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">8m ago</span>
+        </div>
+        <div class="tx-row">
+          <span class="badge badge-green" style="min-width:42px;justify-content:center">201</span>
+          <span style="font-family:var(--mono);font-size:12px;color:#A78BFA;min-width:100px">POST</span>
+          <span style="font-family:var(--mono);font-size:12px;flex:1">/v1/agents</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--green)">88ms</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">14m ago</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function sw(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.topbar-tab, .nav-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  const tabs = document.querySelectorAll('.topbar-tab');
+  const navs = document.querySelectorAll('.nav-item');
+  const map = {home:0,agents:1,playground:2};
+  if (map[v] !== undefined) { tabs[map[v]].classList.add('active'); navs[map[v]+1].classList.add('active'); }
+}
+
+function runPayment() {
+  const btn = document.querySelector('.btn-run');
+  const box = document.getElementById('pg-response');
+  btn.innerHTML = '<span>⟳</span> Processing...';
+  btn.disabled = true;
+  box.style.display = 'none';
+  setTimeout(() => {
+    const pid = 'pay_' + Math.random().toString(36).substr(2,9);
+    box.style.display = 'block';
+    box.innerHTML = `<span style="color:#6B7280">// Response 200 OK · 118ms</span>
+{
+  <span style="color:#A78BFA">"payment_id"</span>: <span style="color:#86EFAC">"${pid}"</span>,
+  <span style="color:#A78BFA">"status"</span>:     <span style="color:#86EFAC">"processing"</span>,
+  <span style="color:#A78BFA">"from"</span>:       <span style="color:#86EFAC">"research-agent-01"</span>,
+  <span style="color:#A78BFA">"to"</span>:         <span style="color:#86EFAC">"acct_freelancer_42"</span>,
+  <span style="color:#A78BFA">"amount"</span>:     <span style="color:#FCD34D">12.50</span>,
+  <span style="color:#A78BFA">"currency"</span>:   <span style="color:#86EFAC">"USD"</span>,
+  <span style="color:#A78BFA">"method"</span>:     <span style="color:#86EFAC">"ach"</span>,
+  <span style="color:#A78BFA">"settled_by"</span>: <span style="color:#86EFAC">"2026-03-05T22:30:00Z"</span>,
+  <span style="color:#A78BFA">"webhook"</span>:    <span style="color:#86EFAC">"will fire on settlement"</span>
+}`;
+    btn.innerHTML = '<span>▶</span> Send Test Payment';
+    btn.disabled = false;
+  }, 1000);
+}
+
+// Simulate live feed adding a new tx every 12s
+setInterval(() => {
+  const agents = ['research-agent-01','scraper-agent-03','media-agent-02','scheduler-agent-01'];
+  const targets = ['@wordsmith_api','data-provider-api','video-render-api','acct_contractor_09'];
+  const amounts = [0.50, 1.20, 3.00, 5.50, 8.00, 12.50, 0.80];
+  const memos = ['Image generation task','API data pull','Content research','Video render 30s','SEO keyword analysis'];
+  const a = agents[Math.floor(Math.random()*agents.length)];
+  const t = targets[Math.floor(Math.random()*targets.length)];
+  const amt = amounts[Math.floor(Math.random()*amounts.length)];
+  const memo = memos[Math.floor(Math.random()*memos.length)];
+  const pid = 'pay_'+Math.random().toString(36).substr(2,8);
+  const row = document.createElement('div');
+  row.className = 'tx-row';
+  row.style.opacity = '0'; row.style.transition = 'opacity 0.4s';
+  row.innerHTML = `<div class="tx-icon tx-icon-pay">💸</div>
+    <div class="tx-main">
+      <div class="tx-desc">${a} → ${t}</div>
+      <div class="tx-meta">${pid} · ACH · memo: "${memo}"</div>
+    </div>
+    <div class="tx-amount out">-$${amt.toFixed(2)}</div>
+    <div class="tx-time">just now</div>`;
+  const list = document.getElementById('tx-list');
+  list.insertBefore(row, list.firstChild);
+  setTimeout(() => row.style.opacity = '1', 50);
+  if (list.children.length > 8) list.removeChild(list.lastChild);
+}, 12000);
+</script>
+</body>
+</html>
