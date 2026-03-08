@@ -39,6 +39,29 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); line
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 
+/* ── TRUST BANNER ── */
+.trust-banner {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  padding: 10px 0;
+}
+.trust-track {
+  display: flex;
+  gap: 48px;
+  animation: scroll-left 30s linear infinite;
+  width: max-content;
+}
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.trust-banner .trust-pill {
+  white-space: nowrap;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -75,7 +98,7 @@ nav {
 /* ── HERO ── */
 .hero {
   min-height: 100vh; display: flex; align-items: center;
-  padding: 120px 48px 80px;
+  padding: 140px 48px 80px;
   position: relative; overflow: hidden;
 }
 .hero-bg {
@@ -550,6 +573,45 @@ footer {
 </head>
 <body>
 
+<!-- TRUST BANNER -->
+<div class="trust-banner">
+  <div class="trust-track">
+    <div class="trust-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      ACH + Wire only
+    </div>
+    <div class="trust-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Per-agent spend limits
+    </div>
+    <div class="trust-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Start in 5 minutes
+    </div>
+    <div class="trust-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      No crypto. Ever.
+    </div>
+    <!-- Duplicate for seamless loop -->
+    <div class="trust-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      ACH + Wire only
+    </div>
+    <div class="trust-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Per-agent spend limits
+    </div>
+    <div class="trust-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Start in 5 minutes
+    </div>
+    <div class="trust-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      No crypto. Ever.
+    </div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
@@ -576,7 +638,7 @@ footer {
   <div class="hero-bg"></div>
   <div class="hero-grid">
     <div>
-      <div class="hero-eyebrow">Developer Preview</div>
+
       <h1>Agents that can pay.<br><em style="display:inline-block;margin-top:0.28em;">With rules you control.</em></h1>
       <p class="hero-sub">ACH and wire payments built for AI agents. Spend limits, human approval queues, and agent identity — out of the box.</p>
       <form class="hero-form" id="hero-form" onsubmit="submitHeroForm(event)">
@@ -592,24 +654,6 @@ footer {
       <div class="hero-powered">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Powered by <a href="https://www.getbankshot.com" target="_blank" rel="noopener">Bank Shot</a>
-      </div>
-      <div class="hero-trust">
-        <div class="trust-pill">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          ACH + Wire only
-        </div>
-        <div class="trust-pill">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Per-agent spend limits
-        </div>
-        <div class="trust-pill">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Start in 5 minutes
-        </div>
-        <div class="trust-pill">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          No crypto. Ever.
-        </div>
       </div>
     </div>
 
