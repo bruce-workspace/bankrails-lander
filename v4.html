@@ -519,10 +519,15 @@ footer {
   section { padding: 72px 24px; }
   .hero { padding: 100px 24px 60px; }
   .hero-grid, .problem-grid, .no-crypto-grid, .quickstart-grid { grid-template-columns: 1fr; gap: 48px; }
-  .hero-visual { order: -1; }
-  .terminal-img { width: 240px; margin: 0 auto; }
-  .notif-card { right: 0; min-width: 200px; }
-  .badge-card { left: 0; }
+  .hero-visual { order: 1; }
+  .browser-frame { width: 100%; max-width: 420px; }
+  .chip-1 { top: -14px; left: -8px; font-size: 11px; padding: 7px 10px; }
+  .chip-2 { top: 50px; right: -8px; font-size: 11px; padding: 7px 10px; }
+  .chip-3 { bottom: 60px; left: -8px; font-size: 11px; padding: 7px 10px; }
+  .chip-4 { bottom: -14px; right: -8px; font-size: 11px; padding: 7px 10px; }
+  .hero-form-row { flex-direction: column; align-items: stretch; }
+  .hero-email-input { max-width: 100%; }
+  .hero-submit { justify-content: center; }
   .use-cases-grid, .trust-grid { grid-template-columns: 1fr; }
   .screen-item { width: 320px; }
   .vs-header, .vs-row { grid-template-columns: 1fr 1fr 1fr; }
@@ -563,7 +568,7 @@ footer {
     <div>
       <div class="hero-eyebrow">Developer Preview</div>
       <h1>Agents that can pay.<br><em style="display:inline-block;margin-top:0.28em;">With rules you control.</em></h1>
-      <p class="hero-sub">The payment layer for autonomous AI agents. ACH and wire transfers, spend limits, human approval queues — everything your agents need to operate in the real world.</p>
+      <p class="hero-sub">ACH and wire payments built for AI agents. Spend limits, human approval queues, and agent identity — out of the box.</p>
       <form class="hero-form" id="hero-form" onsubmit="submitHeroForm(event)">
         <div class="hero-form-row">
           <input type="email" id="hero-email" class="hero-email-input" placeholder="you@company.com" required autocomplete="email">
