@@ -138,10 +138,12 @@ h1 em { font-style: normal; color: var(--purple-light); }
   gap: 6px; transition: color 0.2s;
 }
 .btn-secondary:hover { color: var(--text); }
-.hero-trust { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.hero-trust {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px;
+}
 .trust-pill {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 12px; color: var(--text-muted);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-dim); white-space: nowrap;
 }
 .trust-pill svg { color: var(--green); flex-shrink: 0; }
 
@@ -520,6 +522,7 @@ footer {
   .hero { padding: 100px 24px 60px; }
   .hero-grid, .problem-grid, .no-crypto-grid, .quickstart-grid { grid-template-columns: 1fr; gap: 48px; }
   .hero-visual { order: 1; }
+  .hero-trust { grid-template-columns: 1fr; gap: 8px; }
   .browser-frame { width: 100%; max-width: 420px; }
   .chip-1 { top: -14px; left: -8px; font-size: 11px; padding: 7px 10px; }
   .chip-2 { top: 50px; right: -8px; font-size: 11px; padding: 7px 10px; }
@@ -586,15 +589,15 @@ footer {
         </div>
         <div class="trust-pill">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Per-agent spend limits
+        </div>
+        <div class="trust-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
           Start in 5 minutes
         </div>
         <div class="trust-pill">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Not crypto. Not stablecoins. Ever.
-        </div>
-        <div class="trust-pill">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Per-agent spend limits
+          No crypto. Ever.
         </div>
       </div>
     </div>
