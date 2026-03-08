@@ -41,9 +41,6 @@ img { display: block; max-width: 100%; }
 
 /* ── TRUST BANNER ── */
 .trust-banner {
-  position: sticky;
-  top: 0;
-  z-index: 101;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
@@ -94,13 +91,17 @@ img { display: block; max-width: 100%; }
   white-space: nowrap;
 }
 
-/* ── NAV ── */
-nav {
+/* ── HEADER ── */
+header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 48px;
   background: rgba(7,8,15,0.85);
   backdrop-filter: blur(12px);
+}
+
+/* ── NAV ── */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 48px;
   border-bottom: 1px solid var(--border);
 }
 .nav-logo { display: flex; align-items: center; text-decoration: none; }
@@ -605,6 +606,7 @@ footer {
 </head>
 <body>
 
+<header>
 <!-- TRUST BANNER -->
 <div class="trust-banner">
   <div class="trust-track">
@@ -664,6 +666,7 @@ footer {
   </div>
   <a href="#get-access" class="nav-cta">Get Early Access</a>
 </nav>
+</header>
 
 <!-- HERO -->
 <section class="hero">
