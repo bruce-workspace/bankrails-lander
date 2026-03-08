@@ -41,11 +41,6 @@ img { display: block; max-width: 100%; }
 
 /* ── TRUST BANNER ── */
 .trust-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 101;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
@@ -98,7 +93,7 @@ img { display: block; max-width: 100%; }
 
 /* ── NAV ── */
 nav {
-  position: fixed; top: 42px; left: 0; right: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px 48px;
   background: rgba(7,8,15,0.85);
@@ -132,7 +127,7 @@ nav {
 /* ── HERO ── */
 .hero {
   min-height: 100vh; display: flex; align-items: center;
-  padding: 140px 48px 80px;
+  padding: 120px 48px 80px;
   position: relative; overflow: hidden;
 }
 .hero-bg {
