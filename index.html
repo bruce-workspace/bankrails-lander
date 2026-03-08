@@ -41,6 +41,11 @@ img { display: block; max-width: 100%; }
 
 /* ── TRUST BANNER ── */
 .trust-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
@@ -67,7 +72,14 @@ img { display: block; max-width: 100%; }
   background: var(--bg);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
-  padding: 16px 0;
+  padding: 32px 0 16px;
+}
+.logo-strip-label {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
 }
 .logo-track {
   display: flex;
@@ -86,7 +98,7 @@ img { display: block; max-width: 100%; }
 
 /* ── NAV ── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  position: fixed; top: 42px; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px 48px;
   background: rgba(7,8,15,0.85);
@@ -722,6 +734,7 @@ footer {
 
 <!-- LOGO STRIP -->
 <section class="logo-strip">
+  <div class="logo-strip-label">Works with the tools your agents already use</div>
   <div class="logo-track">
     <div class="logo-item">Anthropic</div>
     <div class="logo-item">OpenAI</div>
