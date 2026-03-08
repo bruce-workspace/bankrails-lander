@@ -94,14 +94,15 @@ img { display: block; max-width: 100%; }
 /* ── HEADER ── */
 header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(7,8,15,0.85);
-  backdrop-filter: blur(12px);
+  display: flex; flex-direction: column;
 }
 
 /* ── NAV ── */
 nav {
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px 48px;
+  background: rgba(7,8,15,0.85);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 .nav-logo { display: flex; align-items: center; text-decoration: none; }
