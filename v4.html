@@ -536,7 +536,42 @@ pre {
 .cta-section .section-sub { margin: 16px auto 40px; }
 
 /* HubSpot form overrides */
-#hs-form-wrap { max-width: 480px; margin: 0 auto; }
+#hs-form-wrap { max-width: 520px; margin: 0 auto; }
+.hs-custom-form { display: flex; flex-direction: column; gap: 10px; }
+.hs-custom-row { display: flex; gap: 10px; }
+.hs-custom-row input[type="email"] {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  padding: 14px 22px;
+  font-size: 15px;
+  color: #fff;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.hs-custom-row input[type="email"]:focus { border-color: rgba(124,58,237,0.6); }
+.hs-custom-row input[type="email"]::placeholder { color: rgba(255,255,255,0.3); }
+.hs-custom-row button {
+  background: var(--purple);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  letter-spacing: 0.01em;
+}
+.hs-custom-row button:hover { opacity: 0.85; }
+.hs-custom-row button:disabled { opacity: 0.4; cursor: not-allowed; }
+.hs-custom-error { color: #f87171; font-size: 13px; display: none; padding-left: 8px; }
+.hs-custom-success { color: #34d399; font-size: 14px; display: none; text-align: center; padding: 12px; }
+@media (max-width: 600px) { .hs-custom-row { flex-direction: column; } }
 .hs-form-field { margin-bottom: 14px; }
 .hs-input {
   width: 100% !important; background: var(--surface) !important;
@@ -1159,7 +1194,16 @@ footer {
     <div class="section-label" style="margin-bottom:14px;">Early Access</div>
     <h2 class="section-title">Ready to give your agents a wallet?</h2>
     <p class="section-sub">Developer access is first. Drop your email and we'll reach out when your spot is ready.</p>
-    <div id="hs-form-wrap"></div>
+    <div id="hs-form-wrap">
+      <div class="hs-custom-form">
+        <div class="hs-custom-row">
+          <input type="email" id="hs-email" placeholder="your@company.com" autocomplete="email">
+          <button type="button" onclick="submitHSForm()">Get Early Access</button>
+        </div>
+        <div class="hs-custom-error" id="hs-error"></div>
+        <div class="hs-custom-success" id="hs-success">✓ You're on the list. We'll reach out when your spot is ready.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1188,14 +1232,50 @@ footer {
   </div>
 </footer>
 
-<!-- HUBSPOT -->
-<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+<!-- HUBSPOT Forms API -->
 <script>
-hbspt.forms.create({
-  region: "na1",
-  portalId: "50799094",
-  formId: "63247df3-fd8f-4fdd-b8cf-991d56bcdab6",
-  target: "#hs-form-wrap"
+async function submitHSForm() {
+  const emailEl = document.getElementById('hs-email');
+  const errorEl = document.getElementById('hs-error');
+  const successEl = document.getElementById('hs-success');
+  const btn = document.querySelector('#hs-form-wrap button');
+  const email = emailEl.value.trim();
+
+  errorEl.style.display = 'none';
+  if (!email || !email.includes('@')) {
+    errorEl.textContent = 'Please enter a valid email.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  try {
+    const res = await fetch('https://api.hsforms.com/submissions/v3/integration/submit/50799094/63247df3-fd8f-4fdd-b8cf-991d56bcdab6', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fields: [{ name: 'email', value: email }],
+        context: { pageUri: window.location.href, pageName: 'BankRails Early Access' }
+      })
+    });
+    if (res.ok) {
+      document.querySelector('.hs-custom-row').style.display = 'none';
+      successEl.style.display = 'block';
+    } else {
+      throw new Error('Submit failed');
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Get Early Access';
+    errorEl.textContent = 'Something went wrong. Try again.';
+    errorEl.style.display = 'block';
+  }
+}
+
+document.getElementById('hs-email')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitHSForm();
 });
 </script>
 
